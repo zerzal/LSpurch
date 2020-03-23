@@ -534,13 +534,7 @@ print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
 print "<input type=text id=des9 name=des9 size=15>\n";
 print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\$";
 print "<input type=text id=ucost9 name=ucost9 size=4>\n";
-print "</font><br></b>";
-
-print "<p>*** <font color=blue><i>On the next \"Purchase Requisition\" page you print as </i><b>PDF</b><i> by </i><b>copying the \"Reference\" string</b><i> 
-		\> right click<br> the document and chose \"</i><b>Print</b><i>\" \> Destination is \> \"</i><b>Save as PDF</b><i>\"\.
-		\"</i><b>Save</b><i>\" the file to your favorite spot by <br>pasting the copied Reference string as the file name. 
-		Lastly send the requisition PDF and any other needed<br> files to our supervisor for approval. </i></font></p>";
-
+print "</font><br><br></b>";
 print "<input type=submit> * <input type=reset><br><br><br><br>\n";
 print "</form></body></html>\n";
 exit;
@@ -605,7 +599,7 @@ th, td {
 </style></head>\n";
 
 print "<body><font size=5><i><b><center>PURCHASE REQUISITION</center></i></b></font>";
-print  "<br><br>";
+print  "<br>";
 $ven0 =~ tr/_\t/ /s;
 print "<FONT SIZE=3 color=blue>Vendor: </FONT><b><br><FONT SIZE=3>$ven0</b></FONT>\n"; #vendor name
 print  "<br>";
@@ -649,7 +643,7 @@ print  "<br><br>";
 print "<FONT SIZE=3 color=blue>Ship To: </FONT><FONT SIZE=3><b>Dwayne Ayers - UNC-CH, 136L Giles Horney Bldg., 103 Airport Dr Chapel Hill, NC 27599</b></FONT>";
 print  "<br><br>";
 print "<FONT SIZE=3 color=blue>Reference: </FONT><FONT SIZE=3><b>$wonumber1-$wonumber2 - $ven0 - $recipient</b></FONT>\n";
-print  "<br><br><br>";
+print  "<br><br>";
 print "<table style=width:100\%>";
 print "<tr><th><font color=blue>ITEM</font></th><th><font color=blue>QTY</font></th><th><font color=blue>UOM</font></th><th><font color=blue>STOCK#</font></th><th><font color=blue>DESCRIPTION</font></th><th><font color=blue>UNIT COST</font></th><th><font color=blue>TOTAL COST</font></th></tr>";
 print "<tr><td>1</td><td>$qty0</td><td>$uom0</td><td>$stockno0</td><td>$des0</td><td>\$$ucost0</td><td>\$$tcost0</td></tr>";
@@ -674,9 +668,15 @@ function goBack() {
 }
 </script>";
 
+print "<br>";
+
 print "<form action=$cgiurl>
     <input type=\"submit\" value=\"Create New\" >
+    <input type=button name=print value=\"Print as PDF\" onClick=\"window\.print()\"> Choose Destination as <b>\"Save as PDF\"</b>
 </form>";
+print "<font color=red>Copy \"Reference\" above and paste as file name.</font>";
+
+print  "<br><br><br>";
 
 print "</body></html>\n";
 exit;
