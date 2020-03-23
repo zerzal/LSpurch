@@ -1,0 +1,8 @@
+vendor: ACME BOOMARANGS
+address: 000 MAIN ST SOMEWHERE OK 55555
+phone: 555-555-5555
+fax: 555-555-5554
+cust: 777
+rep: WHIL E COYOTE
+cell: 555-555-5556
+email: wecoyote@boomarangsrus.com
