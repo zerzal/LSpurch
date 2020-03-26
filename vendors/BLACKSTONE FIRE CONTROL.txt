@@ -1,0 +1,8 @@
+vendor: BLACKSTONE FIRE CONTROL
+address: 2912 Manufacturers Rd. Greensboro, NC 27406
+phone: 336-791-0593
+fax: 
+cust: 
+rep: MARK SNYDER / MEREDITH BRUST 
+cell: 
+email: msnyder@blackstonefsi.com / mbrust@blackstonefsi.com 

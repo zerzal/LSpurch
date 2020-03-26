@@ -1,0 +1,8 @@
+vendor: EDWARDS ELECTRONIC SYSTEMS #33998
+address: 3821 Powhatan Road Clayton, NC 27527
+phone: 919.359.2239
+fax: 919.359.2913
+cust: 
+rep: Mike Rich
+cell: 
+email: mikerich@edwardselectronicsystems.com

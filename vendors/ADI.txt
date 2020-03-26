@@ -1,0 +1,8 @@
+vendor: ADI #31868
+address: 4500 Green Point Dr., Ste 103, Greensboro, NC 27410
+phone: 336-668-3644
+fax:
+cust: 91501
+rep: Mike Stepp
+cell: 
+email: Mike_Stepp@Adi-dist.com

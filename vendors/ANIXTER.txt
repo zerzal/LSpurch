@@ -1,0 +1,8 @@
+vendor: ANIXTER #30709
+address: 2800 PERIMETER PARK DR STE E   MORRISVILLE, NC 27560
+phone: (919) 461-5356
+fax:
+cust: 539315
+rep: Paul Denham
+cell: 
+email: paul.denham@anixter.com
