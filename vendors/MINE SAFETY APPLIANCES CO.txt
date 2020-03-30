@@ -1,0 +1,8 @@
+vendor: MINE SAFETY APPLIANCES CO  #30830
+address: PO BOX 426  PITTSBURGH PA 15264-0426
+phone: 800-672-2222
+fax:  800-967-0398
+cust: 
+rep: 
+cell: 
+email: us.cs@msasafety.com

@@ -1,0 +1,8 @@
+vendor: Johnson Controls Fire Protection  #30811
+address: 540 Civic Blvd 3105 Raleigh NC 27610
+phone: (919) 279-6415
+fax:  (919) 279-6439
+cust: 
+rep: Steve Moore
+cell: (919) 906-5310
+email: steve.w.moore@jci.com

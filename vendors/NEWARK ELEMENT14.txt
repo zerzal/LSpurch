@@ -1,0 +1,8 @@
+vendor: NEWARK ELEMENT14  #32977
+address: 33190 Collection Center Drive Chicago, IL 60693-0331
+phone: 800 463 9275
+fax:  1 877 812 5612
+cust: 613691/333
+rep: 
+cell: 
+email: salestax@newark.com

@@ -1,0 +1,8 @@
+vendor: KNC TECHNOLOGIES  #36005
+address: 12845 Old US Highway 52, Winston-Salem, NC 27107
+phone: 336-760-5512
+fax:   336-775-1213
+cust: 
+rep: Chad Billings
+cell: 
+email: ChadB@knctech.us
