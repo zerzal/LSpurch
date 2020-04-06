@@ -1,0 +1,8 @@
+vendor: UltraSystems Electronics Inc  #77680
+address: 13 Columbia Dr Suite 10 Amherst, NH 03031
+phone: (800) 978-8058
+fax: 
+cust: 
+rep: 
+cell: 
+email: support@useicorp.com

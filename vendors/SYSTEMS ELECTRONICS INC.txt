@@ -1,0 +1,8 @@
+vendor: SYSTEMS ELECTRONICS INC  #42056
+address: 4432 K Held Road Knightdale, NC 27545
+phone: 919-266-9908
+fax: 919-266-9473
+cust: 
+rep: PAUL LAMM
+cell: (919) 815-0299
+email: paul.lamm@systemelectronics.com

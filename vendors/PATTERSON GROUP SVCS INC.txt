@@ -1,0 +1,8 @@
+vendor: PATTERSON GROUP SVCS INC  #39340
+address: 229 Carthage St Sanford, NC 27330-4204
+phone: (919) 776-2403
+fax:  
+cust: 
+rep: Greg Patterson
+cell: 
+email: pattersongroup@windstream.net

@@ -1,0 +1,8 @@
+vendor: PROTEGIS FIRE & SAFETY  #32991
+address: 1812 Cargo Court Louisville, KY 40299
+phone: (502) 694-1508
+fax:  (502) 491-6543
+cust: 
+rep: Nick Dumeyer
+cell: 
+email: ndumeyer@protegis.com

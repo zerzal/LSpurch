@@ -1,0 +1,8 @@
+vendor: SIEMENS INDUSTRY INC  #32351
+address: 215 Southport Dr, Suite 900, Morrisville, NC 27560
+phone: 919-469-5095
+fax: 919-469-9846
+cust: 
+rep: John Beacham
+cell: 
+email: john.beacham@siemens.com
