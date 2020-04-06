@@ -9,8 +9,8 @@ use warnings;
 
 my $ver = "1.0";
 
-# my $cgiurl = "index.pl";  #un-rem line for production
-my $cgiurl = "lspurch.pl"; #rem line for production
+my $cgiurl = "index.pl";  #un-rem line for production
+# my $cgiurl = "lspurch.pl"; #rem line for production
 
 my $ymd = sub{sprintf '%02d-%02d-%04d',
     $_[4]+1, $_[3], $_[5]+1900, }->(localtime);
@@ -27,7 +27,8 @@ my %FORM;
 my $err;
 my @vendor;
 my $ven;
-my $directory = 'C:/\Abyss Web Server/\htdocs/\vendors';
+# my $directory = 'C:/\Abyss Web Server/\htdocs/\vendors';
+my $directory = '/vendors';
 my $file1;
 my $file2;
 my $file3;
