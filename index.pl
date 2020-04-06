@@ -28,7 +28,7 @@ my $err;
 my @vendor;
 my $ven;
 # my $directory = 'C:/\Abyss Web Server/\htdocs/\vendors';
-my $directory = '/vendors';
+my $directory = 'http://lspurch-dcayers.cloudapps.unc.edu/vendors';
 my $file1;
 my $file2;
 my $file3;
