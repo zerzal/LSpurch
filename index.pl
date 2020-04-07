@@ -27,7 +27,7 @@ my %FORM;
 my $err;
 my @vendor;
 my $ven;
-my $directory = "\/vendors";
+my $directory = "/opt/app-root/src/vendors";
 my $file1;
 my $file2;
 my $file3;
