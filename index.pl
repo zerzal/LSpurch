@@ -230,7 +230,7 @@ $orderby = $FORM{'orderby'};
 # Vendor Choose Form - Start
 sub begin {
 print "Content-type: text/html\n\n";
-print "<html><head><title>SHOP 245302 PURCHASING $ver</font></title></head>\n";
+print "<html><head><title>SHOP 245302 PURCHASING $ver</title></head>\n";
 
 print "<body><FONT SIZE = 5><b>SHOP 245302 PURCHASING</b></FONT><FONT SIZE = 2 color = red>\&nbsp\;\&nbsp\;<b>$ver</b><br><br>\n";
 print "</font><br>\n";
