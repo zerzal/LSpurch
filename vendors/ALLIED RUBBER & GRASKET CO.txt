@@ -1,0 +1,8 @@
+vendor: ALLIED RUBBER & GRASKET CO  #36447
+address: 3145 Tiger Run Ct. Suite 105 Carlsbad, CA 92010
+phone: 800-854-1015
+fax: 760-727-3270
+cust: 539315
+rep: Tom Keigwin
+cell: 
+email: tomk@argco.com

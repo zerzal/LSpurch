@@ -1,5 +1,5 @@
 vendor: RED STAR OIL COMPANY INC.  #31213
-address: 802 Purser Drive Raleigh, NC 27603
+address: 802 Purser Drive Raleigh NC 27603
 phone: 919-772-1944
 fax: (919) 779-8871
 cust: 

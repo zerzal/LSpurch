@@ -1,0 +1,8 @@
+vendor: BFPE INTERNATIONAL  #33532
+address: 115 Bestwood Drive Clayton, NC 27520
+phone: 919-550-2699 / 800-849-8886
+fax: 
+cust: 
+rep: BRYAN D DECK 
+cell: 
+email: bdeck@bfpe.com

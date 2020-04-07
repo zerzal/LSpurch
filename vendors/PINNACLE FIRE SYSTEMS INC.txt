@@ -1,0 +1,8 @@
+vendor: PINNACLE FIRE SYSTEMS INC  #38733
+address: 1013 Classic Rd. Apex, NC  27539
+phone: 919 367 0240
+fax:  919 367 0247
+cust: 
+rep: Rick Shores
+cell: (919) 795-6916
+email: rick@pinnaclefire.com
