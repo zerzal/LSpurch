@@ -535,16 +535,13 @@ print "<input type=text id=des9 name=des9 size=15>\n";
 print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\$";
 print "<input type=text id=ucost9 name=ucost9 size=4>\n";
 print "</font><br><br></b>";
-print "<input type=submit> * <input type=reset><br><br>\n";
-print "<button onclick=\"goBack()\">Go Back</button>
-
-<script>
-function goBack() {
-  window.history.back();
-}
-</script>";
+print "<input type=submit> * <input type=reset><br>\n";
+print "</form>";
+print "<form action=$cgiurl>
+    <input type=\"submit\" value=\"Home\" >
+    </form>";
 print "<br><br><br>";
-print "</form></body></html>\n";
+print "</body></html>\n";
 exit;
 }
 
