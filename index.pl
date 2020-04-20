@@ -538,7 +538,7 @@ print "</font><br><br></b>";
 print "<input type=submit> * <input type=reset><br>\n";
 print "</form>";
 print "<form action=$cgiurl>
-    <input type=\"submit\" value=\"Home\" >
+    <input type=\"submit\" value=\"Go Home\" >
     </form>";
 print "<br><br><br>";
 print "</body></html>\n";
@@ -676,10 +676,10 @@ function goBack() {
 print "<br>";
 
 print "<form action=$cgiurl>
-    <input type=\"submit\" value=\"Create New\" >
+    <input type=\"submit\" value=\"Create New\" ><br>
     <input type=button name=print value=\"Print as PDF\" onClick=\"window\.print()\"> Choose Destination as <b>\"Save as PDF\"</b>
 </form>";
-print "<font color=red>Copy \"Reference\" above and paste as file name.</font>";
+print "<b><font color=red>Copy \"Reference\" above and paste as file name.</b></font>";
 
 print  "<br><br><br>";
 
