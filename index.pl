@@ -7,10 +7,11 @@ use warnings;
 # Set Variables
 #######################
 
-my $ver = "1.0";
+my $ver = "1.1";
 
 my $cgiurl = "index.pl";  #un-rem line for production
 #my $cgiurl = "lspurch.pl"; #rem line for production
+my $vensend = "venmail.pl";
 
 my $ymd = sub{sprintf '%02d-%02d-%04d',
     $_[4]+1, $_[3], $_[5]+1900, }->(localtime);
@@ -27,7 +28,8 @@ my %FORM;
 my $err;
 my @vendor;
 my $ven;
-my $directory = "/opt/app-root/src/vendors";
+#my $directory = "\vendors"; #Rem for production
+my $directory = "/opt/app-root/src/vendors"; # Un-rem For production
 my $file1;
 my $file2;
 my $file3;
@@ -209,15 +211,25 @@ $des8 = $FORM{'des8'};
 $des9 = $FORM{'des9'};
 
 $ucost0 = $FORM{'ucost0'};
+$ucost0 =~ s/,//g;
 $ucost1 = $FORM{'ucost1'};
+$ucost1 =~ s/,//g;
 $ucost2 = $FORM{'ucost2'};
+$ucost2 =~ s/,//g;
 $ucost3 = $FORM{'ucost3'};
+$ucost3 =~ s/,//g;
 $ucost4 = $FORM{'ucost4'};
+$ucost4 =~ s/,//g;
 $ucost5 = $FORM{'ucost5'};
+$ucost5 =~ s/,//g;
 $ucost6 = $FORM{'ucost6'};
+$ucost6 =~ s/,//g;
 $ucost7 = $FORM{'ucost7'};
+$ucost7 =~ s/,//g;
 $ucost8 = $FORM{'ucost8'};
+$ucost8 =~ s/,//g;
 $ucost9 = $FORM{'ucost9'};
+$ucost9 =~ s/,//g;
 
 $recipient = $FORM{'recipient'};
 $bldg = $FORM{'bldg'};
@@ -259,20 +271,20 @@ while ($file = readdir(DIR)) {
     }
 
 print  "</select>\n";
-
 print  "<br><br>";
-
-
-print "<input type=submit> * <input type=reset><br><br>\n";
-
-#print $file1;
-
-print "</form></body></html>\n";
-
+print "<input type=submit> * <input type=reset><br><br></form>\n";
+print "<font size=5 color=blue>IF VENDOR NOT IN LIST</font><br><br>\n";
+print "<form method=POST action=$vensend>\n";
+print "Enter vendor name:<br><br>\n";
+print "<input type=text id=newven name=newven size=40>";
+print "<br><br>";
+print "Enter your name:<br><br>\n";
+print "<input type=text id=reqstr name=reqstr size=40><br><br>";
+print "<input type=submit> * <input type=reset><br><br></form>\n";
+print "</body></html>\n";
 exit;
 
 }
-
 
 #Main Purchasing Form - data from vendor choose form
 sub output {
@@ -592,7 +604,7 @@ my $sum = $tcost0 + $tcost1 + $tcost2 + $tcost3 + $tcost4 + $tcost5 + $tcost6 + 
 $sum = sprintf("%.2f", $sum);
 
 print "Content-type: text/html\n\n";
-print "<html><head><title>LS PURCHASING DOCUMENT</title>
+print "<html><head><title>$wonumber1-$wonumber2 - $bldg - $recipient</title>
 <style>
 table, th, td {
   border: 1px solid black;
@@ -603,7 +615,22 @@ th, td {
 }
 </style></head>\n";
 
-print "<body><font size=5><i><b><center>PURCHASE REQUISITION</center></i></b></font>";
+print "<script>
+		function printDiv(divName){
+			var printContents = document.getElementById(divName).innerHTML;
+			var originalContents = document.body.innerHTML;
+
+			document.body.innerHTML = printContents;
+
+			window.print();
+
+			document.body.innerHTML = originalContents;
+
+		}
+	</script>";
+
+
+print "<body><div id='printMe'><font size=5><i><b><center>PURCHASE REQUISITION</center></i></b></font>";
 print  "<br>";
 $ven0 =~ tr/_\t/ /s;
 print "<FONT SIZE=3 color=blue>Vendor: </FONT><b><br><FONT SIZE=3>$ven0</b></FONT>\n"; #vendor name
@@ -647,7 +674,7 @@ print "<FONT SIZE=3 color=blue>Requested: </FONT><FONT SIZE=3><b>$req</b></FONT>
 print  "<br><br>";
 print "<FONT SIZE=3 color=blue>Ship To: </FONT><FONT SIZE=3><b>Dwayne Ayers - UNC-CH, 136L Giles Horney Bldg., 103 Airport Dr Chapel Hill, NC 27599</b></FONT>";
 print  "<br><br>";
-print "<FONT SIZE=3 color=blue>Reference: </FONT><FONT SIZE=3><b>$wonumber1-$wonumber2 - $ven0 - $recipient</b></FONT>\n";
+print "<FONT SIZE=3 color=blue>Reference: </FONT><FONT SIZE=3><b>$wonumber1-$wonumber2 - $bldg - $recipient</b></FONT>\n";
 print  "<br><br>";
 print "<table style=width:100\%>";
 print "<tr><th><font color=blue>ITEM</font></th><th><font color=blue>QTY</font></th><th><font color=blue>UOM</font></th><th><font color=blue>STOCK#</font></th><th><font color=blue>DESCRIPTION</font></th><th><font color=blue>UNIT COST</font></th><th><font color=blue>TOTAL COST</font></th></tr>";
@@ -663,7 +690,14 @@ print "<tr><td>9</td><td>$qty8</td><td>$uom8</td><td>$stockno8</td><td>$des8</td
 print "<tr><td>10</td><td>$qty9</td><td>$uom9</td><td>$stockno9</td><td>$des9</td><td>\$$ucost9</td><td>\$$tcost9</td></tr>";
 print "<tr><td bgcolor=black></td><td bgcolor=black></td><td bgcolor=black></td><td bgcolor=black></td><td bgcolor=black></td><td bgcolor=black></td><td align=left><FONT SIZE=4 color=blue>Total Order \= </FONT><b>\$$sum</b></td></tr>";
 print "</table>";
-print  "<br>";
+print  "<br></div>";
+
+print "<font size=4 color=blue><b>\"Reference:\" </font><font size=4 color=black>above becomes file name.</b></font><br><br>";
+
+print "<form action=$cgiurl>    
+    <input type=button name=print value=\"Print as PDF\" onClick=printDiv('printMe')>\&nbsp\;Choose Destination as <b>\"Save as PDF\" and send file for approval.</b><br><br>
+    <input type=\"submit\" value=\"Create New\" >
+</form>";
 
 print "<button onclick=\"goBack()\">Go Back</button>
 
@@ -673,13 +707,10 @@ function goBack() {
 }
 </script>";
 
-print "<br>";
+print "<br><br>";
 
-print "<form action=$cgiurl>
-    <input type=\"submit\" value=\"Create New\" ><br>
-    <input type=button name=print value=\"Print as PDF\" onClick=\"window\.print()\"> Choose Destination as <b>\"Save as PDF\"</b>
-</form>";
-print "<b><font color=red>Copy \"Reference\" above and paste as file name.</b></font>";
+
+
 
 print  "<br><br><br>";
 
