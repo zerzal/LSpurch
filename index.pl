@@ -232,7 +232,7 @@ $ucost9 = $FORM{'ucost9'};
 $ucost9 =~ s/,//g;
 
 $recipient = $FORM{'recipient'};
-$bldg = $FORM{'bldg'};
+$bldg = uc($FORM{'bldg'});
 $orderby = $FORM{'orderby'};
 
 &outputf; #building final purchasing document
