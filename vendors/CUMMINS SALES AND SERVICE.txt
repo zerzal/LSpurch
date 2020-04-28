@@ -1,0 +1,8 @@
+vendor: CUMMINS SALES AND SERVICE
+address: 512 TEAGUE STREET  GREENSBORO, NC 27406
+phone: 336-275-4531
+fax: 
+cust: 353784
+rep: JEFF PARRISH
+cell: 
+email: 
