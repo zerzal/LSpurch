@@ -1,5 +1,5 @@
 #!/afs/isis/pkg/perl/bin/perl
-#shop 245302 Purchasing Form
+#shop 245302 Purchase Request Form
 # By Dwayne Ayers
 use strict;
 use warnings;
@@ -7,7 +7,7 @@ use warnings;
 # Set Variables
 #######################
 
-my $ver = "1.1";
+my $ver = "1.2";
 
 my $cgiurl = "index.pl";  #un-rem line for production
 #my $cgiurl = "lspurch.pl"; #rem line for production
@@ -17,6 +17,7 @@ my $ymd = sub{sprintf '%02d-%02d-%04d',
     $_[4]+1, $_[3], $_[5]+1900, }->(localtime);
 	
 my $shop = "245302";
+my $title = "SHOP $shop PURCHASING/REPAIRS";
 my $wonumber;
 my $venfile;
 #my $allow_html = 0;
@@ -35,7 +36,7 @@ my $file2;
 my $file3;
 my @vlist;
 my $file;
-my ($ven0, $ven1, $ven2, $ven3, $ven4, $ven5, $ven6, $ven7, $req, $wonumber1, $wonumber2, $orderby);
+my ($ven0, $ven1, $ven2, $ven3, $ven4, $ven5, $ven6, $ven7, $req, $wonumber1, $wonumber2, $orderby, $prtype);
 my ($qty0, $qty1, $qty2, $qty3, $qty4, $qty5, $qty6, $qty7, $qty8, $qty9);
 my ($uom0, $uom1, $uom2, $uom3, $uom4, $uom5, $uom6, $uom7, $uom8, $uom9);
 my ($stockno0, $stockno1, $stockno2, $stockno3, $stockno4, $stockno5, $stockno6, $stockno7, $stockno8, $stockno9);
@@ -162,6 +163,7 @@ $ven5 = $FORM{'vlist5'};
 $ven6 = $FORM{'vlist6'};
 $ven7 = $FORM{'vlist7'};
 
+$prtype = $FORM{'prtype'};
 $req = $FORM{'requested'};
 $wonumber1 = $FORM{'wo1'};
 $wonumber2 = $FORM{'wo2'};
@@ -242,9 +244,9 @@ $orderby = $FORM{'orderby'};
 # Vendor Choose Form - Start
 sub begin {
 print "Content-type: text/html\n\n";
-print "<html><head><title>SHOP 245302 PURCHASING $ver</title></head>\n";
+print "<html><head><title>$title</title></head>\n";
 
-print "<body><FONT SIZE = 5><b>SHOP 245302 PURCHASING</b></FONT><FONT SIZE = 2 color = red>\&nbsp\;\&nbsp\;<b>$ver</b><br><br>\n";
+print "<body><FONT SIZE = 5><b>$title</b></FONT><FONT SIZE = 2 color = red>\&nbsp\;\&nbsp\;<b>$ver</b><br><br>\n";
 print "</font><br>\n";
 print "<form method=POST action= $cgiurl>\n";
 print "<input type=hidden id=hide name=hide value=0>";
@@ -304,8 +306,8 @@ close $cvf;
 
 
 print "Content-type: text/html\n\n";
-print "<html><head><title>SHOP 245302 PURCHASING FORM</title></head>\n";
-print "<body><FONT SIZE = 5><b><center>SHOP 245302 PURCHASING FORM </b></FONT><FONT SIZE = 2 color = red>\&nbsp\;\&nbsp\;<b>$ver</center></b></font><br><br>\n";
+print "<html><head><title>$title</title></head>\n";
+print "<body><FONT SIZE = 5><b><center>$title</b></FONT><FONT SIZE = 2 color = red>\&nbsp\;\&nbsp\;<b>$ver</center></b></font><br><br>\n";
 print "<form method=POST action= $cgiurl>\n";
 print "<input type=hidden id=hide name=hide value=1>";
 
@@ -327,6 +329,13 @@ foreach (@newlist) {
 
 print "<font size=6 color=blue><i><b>$newlist[0]</i></b></font>\n\n";
 print "<br><br><font size=4 color=blue>";
+print "Request Type: ";
+print "<select id=prtype name=prtype>
+  <option value='Material Only'>Material Only</option>
+  <option value='Labor Only'>Labor Only</option>
+  <option value='Material and Labor'>Material and Labor</option>
+  </select>\n";
+print "<br><br>";
 print "<label for=wo>Work Order:</label>\n";
 print "<input type=text id=wo1 name=wo1 size=5 pattern=\[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]>\n";
 print "-\n";
@@ -630,8 +639,13 @@ print "<script>
 	</script>";
 
 
-print "<body><div id='printMe'><font size=5><i><b><center>PURCHASE REQUISITION</center></i></b></font>";
+print "<body><div id='printMe'><font size=5><i><b><center>PURCHASE REQUEST</center></i></b></font>";
 print  "<br>";
+
+#$prtype =~ tr/_\t/ /s;
+print "<FONT SIZE=3 color=blue>For: </FONT><b><br><FONT SIZE=3>$prtype</b></FONT>\n"; #type of request
+print  "<br><br>";
+
 $ven0 =~ tr/_\t/ /s;
 print "<FONT SIZE=3 color=blue>Vendor: </FONT><b><br><FONT SIZE=3>$ven0</b></FONT>\n"; #vendor name
 print  "<br>";
