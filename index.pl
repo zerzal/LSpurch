@@ -7,7 +7,7 @@ use warnings;
 # Set Variables
 #######################
 
-my $ver = "1.2";
+my $ver = "1.3";
 
 my $cgiurl = "index.pl";  #un-rem line for production
 #my $cgiurl = "lspurch.pl"; #rem line for production
@@ -639,7 +639,7 @@ print "<script>
 	</script>";
 
 
-print "<body><div id='printMe'><font size=5><i><b><center>PURCHASE REQUEST</center></i></b></font>";
+print "<body><div id='printMe'><font size=5><i><b><center>$title</center></i></b></font>";
 print  "<br>";
 
 #$prtype =~ tr/_\t/ /s;
