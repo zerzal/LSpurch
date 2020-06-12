@@ -1,0 +1,8 @@
+vendor: VITAL FUEL SYSTEMS
+address: 1076 Classic Road - Apex, NC 27539
+phone: (919) 303-7374
+fax: 
+cust:
+rep: Drew Tarleton 
+cell: (919) 629-8177
+email: dtarleton@vitalfuelsystems.com
