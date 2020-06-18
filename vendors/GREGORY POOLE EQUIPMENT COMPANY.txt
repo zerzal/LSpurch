@@ -1,0 +1,8 @@
+vendor: GREGORY POOLE EQUIPMENT COMPANY
+address: Processing Center, PO Box 60457 Charlotte, NC 28260
+phone: 919-755-7010
+fax: 
+cust: 
+rep: 
+cell: 
+email: 
