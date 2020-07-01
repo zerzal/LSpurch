@@ -162,7 +162,7 @@ $ven6 = $FORM{'vlist6'};
 $ven7 = $FORM{'vlist7'};
 
 $prtype = $FORM{'prtype'};
-$quote = $FORM('quote');
+$quote = $FORM{'quote'};
 $req = $FORM{'requested'};
 $wonumber1 = $FORM{'wo1'};
 $wonumber2 = $FORM{'wo2'};
