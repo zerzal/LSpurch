@@ -664,7 +664,7 @@ $ven3 =~ tr/_\t/ /s;
 print "<FONT SIZE=3 color=blue>Fax: </FONT><FONT SIZE=3><b>$ven3</b></FONT>\n"; #vendor fax
 print  "<br><br>";
 
-print "<FONT SIZE=3 color=blue>Quote number:</FONT><FONT SIZE=3><b>$quote</b></FONT>\n"; #vendor Quote number
+print "<FONT SIZE=3 color=blue>Quote number: </FONT><FONT SIZE=3><b>$quote</b></FONT>\n"; #vendor Quote number
 print "<br><br>";
 
 $ven5 =~ tr/_\t/ /s;
