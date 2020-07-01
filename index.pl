@@ -36,15 +36,13 @@ my $file2;
 my $file3;
 my @vlist;
 my $file;
+my $quote;
 my ($ven0, $ven1, $ven2, $ven3, $ven4, $ven5, $ven6, $ven7, $req, $wonumber1, $wonumber2, $orderby, $prtype);
 my ($qty0, $qty1, $qty2, $qty3, $qty4, $qty5, $qty6, $qty7, $qty8, $qty9);
 my ($uom0, $uom1, $uom2, $uom3, $uom4, $uom5, $uom6, $uom7, $uom8, $uom9);
 my ($stockno0, $stockno1, $stockno2, $stockno3, $stockno4, $stockno5, $stockno6, $stockno7, $stockno8, $stockno9);
 my ($des0, $des1, $des2, $des3, $des4, $des5, $des6, $des7, $des8, $des9);
 my ($ucost0, $ucost1, $ucost2, $ucost3, $ucost4, $ucost5, $ucost6, $ucost7, $ucost8, $ucost9);
-
-
-
 
 
 # $tcost0, $tcost1, $tcost2, $tcost3, $tcost4, $tcost5, $tcost6, $tcost7, $tcost8, $tcost9)
@@ -164,6 +162,7 @@ $ven6 = $FORM{'vlist6'};
 $ven7 = $FORM{'vlist7'};
 
 $prtype = $FORM{'prtype'};
+$quote = $FORM('quote');
 $req = $FORM{'requested'};
 $wonumber1 = $FORM{'wo1'};
 $wonumber2 = $FORM{'wo2'};
@@ -335,6 +334,11 @@ print "<select id=prtype name=prtype>
   <option value='Labor Only'>Labor Only</option>
   <option value='Material and Labor'>Material and Labor</option>
   </select>\n";
+
+print "<br><br>";
+print "Quote number:"; 
+print "<input type=text id=quote name=quote size=20>\n";
+  
 print "<br><br>";
 print "<label for=wo>Work Order:</label>\n";
 print "<input type=text id=wo1 name=wo1 size=5 pattern=\[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]>\n";
@@ -659,6 +663,9 @@ print "<FONT SIZE=3 color=blue>Phone: </FONT><FONT SIZE=3><b>$ven2\&nbsp\;\&nbsp
 $ven3 =~ tr/_\t/ /s;
 print "<FONT SIZE=3 color=blue>Fax: </FONT><FONT SIZE=3><b>$ven3</b></FONT>\n"; #vendor fax
 print  "<br><br>";
+
+print "Quote number: $quote\n";
+print "<br><br>";
 
 $ven5 =~ tr/_\t/ /s;
 print "<FONT SIZE=3 color=blue>Rep: </FONT><FONT SIZE=3><b>$ven5</b></FONT>\&nbsp\;\&nbsp\;\n"; #vendor rep
