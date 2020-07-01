@@ -7,7 +7,7 @@ use warnings;
 # Set Variables
 #######################
 
-my $ver = "1.3";
+my $ver = "1.4";
 
 my $cgiurl = "index.pl";  #un-rem line for production
 #my $cgiurl = "lspurch.pl"; #rem line for production
@@ -335,8 +335,8 @@ print "<select id=prtype name=prtype>
   <option value='Material and Labor'>Material and Labor</option>
   </select>\n";
 
-print "<br><br>";
-print "Quote number:"; 
+print "\&nbsp\;\&nbsp\;\&nbsp\;";
+print "Quote number: "; 
 print "<input type=text id=quote name=quote size=20>\n";
   
 print "<br><br>";
@@ -664,7 +664,7 @@ $ven3 =~ tr/_\t/ /s;
 print "<FONT SIZE=3 color=blue>Fax: </FONT><FONT SIZE=3><b>$ven3</b></FONT>\n"; #vendor fax
 print  "<br><br>";
 
-print "Quote number: $quote\n";
+print "<FONT SIZE=3 color=blue>Quote number:</FONT><FONT SIZE=3><b>$quote</b></FONT>\n"; #vendor Quote number
 print "<br><br>";
 
 $ven5 =~ tr/_\t/ /s;
