@@ -43,6 +43,10 @@ foreach my $pair (@pairs) {
    $FORM{$name} = $value;
 }
 
+if (!$FORM{'newven'}) { # if required information left out
+	$err = "YOU LEFT OUT VENDOR";
+	&error;
+	}
 	$FORM{newven} = uc($FORM{newven});
 
    #email to administrator
