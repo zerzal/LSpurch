@@ -1,0 +1,8 @@
+vendor: CASIL BATTERIES USA
+address: 144 N Beverwyck Rd., STE 139, Lake Hiawatha, NJ 07034
+phone: 973-500-6828
+fax:
+cust: https://casilbatteriesusa.com/
+rep: 
+cell: 
+email: 
