@@ -1,0 +1,8 @@
+vendor: WEST SHORE SERVICES #36268
+address: 6620 Lake Michigan Dr., PO Box 188, Allendale, MI 49401
+phone: 616-895-4347
+fax:  616-895-7158
+cust: 
+rep: 
+cell: 
+email: 
