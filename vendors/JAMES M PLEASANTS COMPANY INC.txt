@@ -1,0 +1,8 @@
+vendor: JAMES M PLEASANTS COMPANY INC VEN#30808
+address: 603 Diamond Hill Ct, Greensboro, NC 27406
+phone: 336-378-9911
+fax:  336-378-2588
+cust: 
+rep: Danny Bennett
+cell: 828-308-2411
+email: DannyB@jmpco.com
