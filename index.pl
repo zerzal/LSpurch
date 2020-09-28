@@ -341,9 +341,9 @@ print "<input type=text id=quote name=quote size=20>\n";
   
 print "<br><br>";
 print "<label for=wo>Work Order:</label>\n";
-print "<input type=text id=wo1 name=wo1 size=5 pattern=\[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]>\n";
+print "<input type=text id=wo1 name=wo1 size=5>\n";
 print "-\n";
-print "<input type=text id=wo2 name=wo2 size=1 pattern=\[0-9][0-9][0-9]>\n";
+print "<input type=text id=wo2 name=wo2 size=1>\n";
 print "\&nbsp\;\&nbsp\;\&nbsp\;<label for=bldg>For Building:</label>\n";
 print "<input type=text id=bldg name=bldg SIZE=20>\n";
 print "<br><br>";
