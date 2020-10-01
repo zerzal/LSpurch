@@ -1,0 +1,8 @@
+vendor: SOUTHERN STATES - CARRBORO VEN# 57809
+address: 300 North Greensboro Street, Carrboro, NC 27510-1724
+phone: (919) 942-3857
+fax:  (919) 942-0429
+cust: 
+rep: 
+cell: 
+email: 
