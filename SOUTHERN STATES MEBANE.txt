@@ -1,0 +1,8 @@
+vendor: SOUTHERN STATES - MEBANE
+address: 1902 S North Carolina Highway 119, Mebane, NC 27302
+phone: (919) 563-9631
+fax:  (919) 563-2612
+cust: 
+rep: 
+cell: 
+email: 
