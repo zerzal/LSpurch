@@ -1,0 +1,8 @@
+vendor: QUOTE FOR CUSTOMER
+address: 
+phone: 
+fax: 
+cust: 
+rep: 
+cell: 
+email: 
