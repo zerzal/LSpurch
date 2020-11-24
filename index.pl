@@ -7,17 +7,17 @@ use warnings;
 # Set Variables
 #######################
 
-my $ver = "1.4";
+my $ver = "1.5";
 
-my $cgiurl = "index.pl";  #un-rem line for production
-#my $cgiurl = "lspurch.pl"; #rem line for production
+#my $cgiurl = "index.pl";  #un-rem line for production
+my $cgiurl = "lspurch.pl"; #rem line for production
 my $vensend = "venmail.pl";
 
 my $ymd = sub{sprintf '%02d-%02d-%04d',
     $_[4]+1, $_[3], $_[5]+1900, }->(localtime);
 	
 my $shop = "245302";
-my $title = "SHOP $shop PURCHASING/REPAIRS";
+my $title = "SHOP $shop PURCHASING/REPAIR/CUSTOMER QUOTE";
 my $wonumber;
 my $venfile;
 #my $allow_html = 0;
@@ -29,14 +29,15 @@ my %FORM;
 my $err;
 my @vendor;
 my $ven;
-#my $directory = "\vendors"; #Rem for production
-my $directory = "/opt/app-root/src/vendors"; # Un-rem For production
+my $directory = "\vendors"; #Rem for production
+#my $directory = "/opt/app-root/src/vendors"; # Un-rem For production
 my $file1;
 my $file2;
 my $file3;
 my @vlist;
 my $file;
 my $quote;
+my $vquote;
 my ($ven0, $ven1, $ven2, $ven3, $ven4, $ven5, $ven6, $ven7, $req, $wonumber1, $wonumber2, $orderby, $prtype);
 my ($qty0, $qty1, $qty2, $qty3, $qty4, $qty5, $qty6, $qty7, $qty8, $qty9);
 my ($uom0, $uom1, $uom2, $uom3, $uom4, $uom5, $uom6, $uom7, $uom8, $uom9);
@@ -50,6 +51,7 @@ my ($ucost0, $ucost1, $ucost2, $ucost3, $ucost4, $ucost5, $ucost6, $ucost7, $uco
 my ($cvf, $bldg, $recipient);
 my ($vlist1, $vlist2, $vlist3, $vlist4, $vlist5, $vlist6, $vlist7);
 my @newlist;
+my $qprtype;
 
 # Get the input from forms
 ###########################
@@ -89,7 +91,7 @@ if ($FORM{'hide'} == 0) {
 	}
 $ven = $FORM{'vendor'};
 
-
+	
 &output; #building purchasing form
 }	
 
@@ -150,8 +152,13 @@ if ($FORM{'hide'} == 1) {
 		$err = "DID YOU FORGET UNIT COST?";
 		&error;
 		}
-		
-		
+}	
+	
+
+if ($FORM{'hide'} == 1 or 2) {
+
+
+	
 $ven0 = $FORM{'vlist0'};
 $ven1 = $FORM{'vlist1'};
 $ven2 = $FORM{'vlist2'};
@@ -236,7 +243,18 @@ $recipient = $FORM{'recipient'};
 $bldg = uc($FORM{'bldg'});
 $orderby = $FORM{'orderby'};
 
+}
+
+if ($FORM{'hide'} == 1) {
+
 &outputf; #building final purchasing document
+
+}
+
+if ($FORM{'hide'} == 2) {
+
+$qprtype = $FORM{'qprtype'};
+&outputqf; #building final quote document
 
 }
 
@@ -244,7 +262,6 @@ $orderby = $FORM{'orderby'};
 sub begin {
 print "Content-type: text/html\n\n";
 print "<html><head><title>$title</title></head>\n";
-
 print "<body><FONT SIZE = 5><b>$title</b></FONT><FONT SIZE = 2 color = red>\&nbsp\;\&nbsp\;<b>$ver</b><br><br>\n";
 print "</font><br>\n";
 print "<form method=POST action= $cgiurl>\n";
@@ -290,7 +307,7 @@ exit;
 #Main Purchasing Form - data from vendor choose form
 sub output {
 
-$ven =~ tr/_\t/ /s;;
+$ven =~ tr/_\t/ /s;
 
 open ($cvf, "<$directory/$ven.txt")  || die "Cannot open vendor file: $!\n";
 
@@ -308,7 +325,7 @@ print "Content-type: text/html\n\n";
 print "<html><head><title>$title</title></head>\n";
 print "<body><FONT SIZE = 5><b><center>$title</b></FONT><FONT SIZE = 2 color = red>\&nbsp\;\&nbsp\;<b>$ver</center></b></font><br><br>\n";
 print "<form method=POST action= $cgiurl>\n";
-print "<input type=hidden id=hide name=hide value=1>";
+#print "<input type=hidden id=hide name=hide value=1>";
 
 #Get vendor data from file
 
@@ -325,7 +342,18 @@ print "<input type=hidden id=vlist7 name=vlist7 value=".$newlist[7]. ">";
 foreach (@newlist) {
 	$_ =~ tr/_\t/ /s;
 	}
-
+	
+	
+	if ($newlist[0] =~ m/QUOTE/) {
+	$vquote = $newlist[0];
+	&cquote;
+	}
+	
+	
+	
+	
+	
+print "<input type=hidden id=hide name=hide value=1>";	
 print "<font size=6 color=blue><i><b>$newlist[0]</i></b></font>\n\n";
 print "<br><br><font size=4 color=blue>";
 print "Request Type: ";
@@ -336,7 +364,7 @@ print "<select id=prtype name=prtype>
   </select>\n";
 
 print "\&nbsp\;\&nbsp\;\&nbsp\;";
-print "Quote number: "; 
+print "Vendor Quote Number: "; 
 print "<input type=text id=quote name=quote size=20>\n";
   
 print "<br><br>";
@@ -570,6 +598,224 @@ print "</body></html>\n";
 exit;
 }
 
+sub cquote {
+print "<input type=hidden id=hide name=hide value=2>";
+print "<font size=6 color=blue><i><b>$newlist[0]</i></b></font>\n\n";
+print "<br><br><font size=4 color=blue>";
+print "Quote Type: ";
+print "<select id=qprtype name=qprtype>
+  <option value='Material Only'>Material Only</option>
+  <option value='Labor Only'>Labor Only</option>
+  <option value='Material and Labor'>Material and Labor</option>
+  </select>\n";
+
+print "\&nbsp\;\&nbsp\;\&nbsp\;";
+print "Customer: "; 
+print "<input type=text id=quote name=quote size=20>\n";
+  
+print "<br><br>";
+print "<label for=qwo>Work Order (if available):</label>\n";
+print "<input type=text id=wo1 name=wo1 size=5>\n";
+print "-\n";
+print "<input type=text id=wo2 name=wo2 size=1>\n";
+print "\&nbsp\;\&nbsp\;\&nbsp\;<label for=bldg>Project Type:</label>\n";
+print "<input type=text id=bldg name=bldg SIZE=20>\n";
+print "<br><br>";
+
+print "<label for=qorderby>Quote Created By:</label>\n";
+print "<select id=orderby name=orderby>\n";
+print  "<option></option>\n";
+print  "<option value='Ayers, Dwayne'>Ayers, Dwayne</option>\n";
+print  "<option value='Brown, Wes'>Brown, Wes</option>\n";
+print  "<option value='Hill, James'>Hill, James</option>\n";
+print  "<option value='Miskow, Michael'>Miskow, Michael</option>\n";
+print  "<option value='Thacker, Daniel'>Thacker, Daniel</option>\n";
+print  "</select>\&nbsp\;\&nbsp\;\&nbsp\;\n";
+print "<br><br>";
+
+print "</font><br><br><font size=4 color=blue>";
+print "<b>ITEM\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;QTY\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;UOM\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;STOCK#\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;DESCRIPTION\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;UNIT COST\n";
+print "<br><br>";
+print "1\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+print "<input type=text id=qty0 name=qty0 size=1>\n";
+print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+print "<select id=uom0 name=uom0>\n";
+print  "<option value='EA'>EA</option>\n";
+print  "<option value='LOT'>LOT</option>\n";
+print  "<option value='KIT'>KIT</option>\n";
+print  "<option value='LABOR'>LABOR</option>\n";
+print  "</select>\&nbsp\;\&nbsp\;\&nbsp\;\n";
+print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+print "<input type=text id=stockno0 name=stockno0 size=10>\n";
+print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+print "<input type=text id=des0 name=des0 size=15>\n";
+print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\$";
+print "<input type=text id=ucost0 name=ucost0 size=4>\n";
+print "<br><br>";
+
+print "2\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+print "<input type=text id=qty1 name=qty1 size=1>\n";
+print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+print "<select id=uom1 name=uom1>\n";
+print  "<option value='EA'>EA</option>\n";
+print  "<option value='LOT'>LOT</option>\n";
+print  "<option value='KIT'>KIT</option>\n";
+print  "<option value='LABOR'>LABOR</option>\n";
+print  "</select>\&nbsp\;\&nbsp\;\&nbsp\;\n";
+print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+print "<input type=text id=stockno1 name=stockno1 size=10>\n";
+print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+print "<input type=text id=des1 name=des1 size=15>\n";
+print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\$";
+print "<input type=text id=ucost1 name=ucost1 size=4>\n";
+
+print "<br><br>";
+print "3\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+print "<input type=text id=qty2 name=qty2 size=1>\n";
+print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+print "<select id=uom2 name=uom2>\n";
+print  "<option value='EA'>EA</option>\n";
+print  "<option value='LOT'>LOT</option>\n";
+print  "<option value='KIT'>KIT</option>\n";
+print  "<option value='LABOR'>LABOR</option>\n";
+print  "</select>\&nbsp\;\&nbsp\;\&nbsp\;\n";
+print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+print "<input type=text id=stockno2 name=stockno2 size=10>\n";
+print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+print "<input type=text id=des2 name=des2 size=15>\n";
+print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\$";
+print "<input type=text id=ucost2 name=ucost2 size=4>\n";
+
+print "<br><br>";
+print "4\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+print "<input type=text id=qty3 name=qty3 size=1>\n";
+print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+print "<select id=uom3 name=uom3>\n";
+print  "<option value='EA'>EA</option>\n";
+print  "<option value='LOT'>LOT</option>\n";
+print  "<option value='KIT'>KIT</option>\n";
+print  "<option value='LABOR'>LABOR</option>\n";
+print  "</select>\&nbsp\;\&nbsp\;\&nbsp\;\n";
+print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+print "<input type=text id=stockno3 name=stockno3 size=10>\n";
+print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+print "<input type=text id=des3 name=des3 size=15>\n";
+print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\$";
+print "<input type=text id=ucost3 name=ucost3 size=4>\n";
+
+print "<br><br>";
+print "5\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+print "<input type=text id=qty4 name=qty4 size=1>\n";
+print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+print "<select id=uom4 name=uom4>\n";
+print  "<option value='EA'>EA</option>\n";
+print  "<option value='LOT'>LOT</option>\n";
+print  "<option value='KIT'>KIT</option>\n";
+print  "<option value='LABOR'>LABOR</option>\n";
+print  "</select>\&nbsp\;\&nbsp\;\&nbsp\;\n";
+print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+print "<input type=text id=stockno4 name=stockno4 size=10>\n";
+print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+print "<input type=text id=des4 name=des4 size=15>\n";
+print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\$";
+print "<input type=text id=ucost4 name=ucost4 size=4>\n";
+
+print "<br><br>";
+print "6\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+print "<input type=text id=qty5 name=qty5 size=1>\n";
+print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+print "<select id=uom5 name=uom5>\n";
+print  "<option value='EA'>EA</option>\n";
+print  "<option value='LOT'>LOT</option>\n";
+print  "<option value='KIT'>KIT</option>\n";
+print  "<option value='LABOR'>LABOR</option>\n";
+print  "</select>\&nbsp\;\&nbsp\;\&nbsp\;\n";
+print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+print "<input type=text id=stockno5 name=stockno5 size=10>\n";
+print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+print "<input type=text id=des5 name=des5 size=15>\n";
+print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\$";
+print "<input type=text id=ucost5 name=ucost5 size=4>\n";
+
+print "<br><br>";
+print "7\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+print "<input type=text id=qty6 name=qty6 size=1>\n";
+print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+print "<select id=uom6 name=uom6>\n";
+print  "<option value='EA'>EA</option>\n";
+print  "<option value='LOT'>LOT</option>\n";
+print  "<option value='KIT'>KIT</option>\n";
+print  "<option value='LABOR'>LABOR</option>\n";
+print  "</select>\&nbsp\;\&nbsp\;\&nbsp\;\n";
+print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+print "<input type=text id=stockno6 name=stockno6 size=10>\n";
+print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+print "<input type=text id=des6 name=des6 size=15>\n";
+print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\$";
+print "<input type=text id=ucost6 name=ucost6 size=4>\n";
+
+print "<br><br>";
+print "8\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+print "<input type=text id=qty7 name=qty7 size=1>\n";
+print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+print "<select id=uom7 name=uom7>\n";
+print  "<option value='EA'>EA</option>\n";
+print  "<option value='LOT'>LOT</option>\n";
+print  "<option value='KIT'>KIT</option>\n";
+print  "<option value='LABOR'>LABOR</option>\n";
+print  "</select>\&nbsp\;\&nbsp\;\&nbsp\;\n";
+print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+print "<input type=text id=stockno7 name=stockno7 size=10>\n";
+print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+print "<input type=text id=des7 name=des7 size=15>\n";
+print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\$";
+print "<input type=text id=ucost7 name=ucost7 size=4>\n";
+
+print "<br><br>";
+print "9\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+print "<input type=text id=qty8 name=qty8 size=1>\n";
+print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+print "<select id=uom8 name=uom8>\n";
+print  "<option value='EA'>EA</option>\n";
+print  "<option value='LOT'>LOT</option>\n";
+print  "<option value='KIT'>KIT</option>\n";
+print  "<option value='LABOR'>LABOR</option>\n";
+print  "</select>\&nbsp\;\&nbsp\;\&nbsp\;\n";
+print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+print "<input type=text id=stockno8 name=stockno8 size=10>\n";
+print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+print "<input type=text id=des8 name=des8 size=15>\n";
+print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\$";
+print "<input type=text id=ucost8 name=ucost8 size=4>\n";
+
+print "<br><br>";
+print "10\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+print "<input type=text id=qty9 name=qty9 size=1>\n";
+print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+print "<select id=uom9 name=uom9>\n";
+print  "<option value='EA'>EA</option>\n";
+print  "<option value='LOT'>LOT</option>\n";
+print  "<option value='KIT'>KIT</option>\n";
+print  "<option value='LABOR'>LABOR</option>\n";
+print  "</select>\&nbsp\;\&nbsp\;\&nbsp\;\n";
+print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+print "<input type=text id=stockno9 name=stockno9 size=10>\n";
+print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+print "<input type=text id=des9 name=des9 size=15>\n";
+print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\$";
+print "<input type=text id=ucost9 name=ucost9 size=4>\n";
+print "</font><br><br></b>";
+print "<input type=submit> * <input type=reset><br>\n";
+print "</form>";
+print "<form action=$cgiurl>
+    <input type=\"submit\" value=\"Go Home\" >
+    </form>";
+print "<br><br><br>";
+print "</body></html>\n";
+exit;
+}
+
+
 
 sub outputf { #building final document from purchasing form
 
@@ -680,7 +926,7 @@ print "<FONT SIZE=3 color=blue>Cust No: </FONT><FONT SIZE=3><b>$ven4</b></FONT>\
 print " <FONT SIZE=3 color=blue>Work Order: </FONT><FONT SIZE=3><b>$wonumber1</b></FONT>\n"; #work order
 print "-\n";
 print " <FONT SIZE = 3><b>$wonumber2</b></FONT>\n"; #work order phase
-my $shop = 245302;
+#my $shop = 245302;
 print "<FONT SIZE=3 color=blue>\&nbsp\;\&nbsp\;Shop: </FONT><b><FONT SIZE=3>$shop</b></FONT>\n"; #shop number
 print  "<br><br>";
 
@@ -739,6 +985,162 @@ print "</body></html>\n";
 exit;
 
 }
+
+sub outputqf { #final document quote form
+
+my $tcost0 = ($qty0 * $ucost0);
+$tcost0 = sprintf("%.2f", $tcost0);
+$ucost0 = sprintf("%.2f", $ucost0);
+
+my $tcost1 = ($qty1 * $ucost1);
+$tcost1 = sprintf("%.2f", $tcost1);
+$ucost1 = sprintf("%.2f", $ucost1);
+
+my $tcost2 = ($qty2 * $ucost2);
+$tcost2 = sprintf("%.2f", $tcost2);
+$ucost2 = sprintf("%.2f", $ucost2);
+
+my $tcost3 = ($qty3 * $ucost3);
+$tcost3 = sprintf("%.2f", $tcost3);
+$ucost3 = sprintf("%.2f", $ucost3);
+
+my $tcost4 = ($qty4 * $ucost4);
+$tcost4 = sprintf("%.2f", $tcost4);
+$ucost4 = sprintf("%.2f", $ucost4);
+
+my $tcost5 = ($qty5 * $ucost5);
+$tcost5 = sprintf("%.2f", $tcost5);
+$ucost5 = sprintf("%.2f", $ucost5);
+
+my $tcost6 = ($qty6 * $ucost6);
+$tcost6 = sprintf("%.2f", $tcost6);
+$ucost6 = sprintf("%.2f", $ucost6);
+
+my $tcost7 = ($qty7 * $ucost7);
+$tcost7 = sprintf("%.2f", $tcost7);
+$ucost7 = sprintf("%.2f", $ucost7);
+
+my $tcost8 = ($qty8 * $ucost8);
+$tcost8 = sprintf("%.2f", $tcost8);
+$ucost8 = sprintf("%.2f", $ucost8);
+
+my $tcost9 = ($qty9 * $ucost9);
+$tcost9 = sprintf("%.2f", $tcost9);
+$ucost9 = sprintf("%.2f", $ucost9);
+
+my $sum = $tcost0 + $tcost1 + $tcost2 + $tcost3 + $tcost4 + $tcost5 + $tcost6 + $tcost7 + $tcost8 + $tcost9;
+$sum = sprintf("%.2f", $sum);
+
+#Quote number generator
+my @chars = ("A".."Z", "0".."9");
+my $mid;
+$mid .= $chars[rand @chars] for 1..12;
+
+print "Content-type: text/html\n\n";
+print "<html><head><title>Q-$mid</title>
+<style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+th, td {
+  padding: 8px;
+}
+</style></head>\n";
+
+print "<script>
+		function printDiv(divName){
+			var printContents = document.getElementById(divName).innerHTML;
+			var originalContents = document.body.innerHTML;
+
+			document.body.innerHTML = printContents;
+
+			window.print();
+
+			document.body.innerHTML = originalContents;
+
+		}
+	</script>";
+
+
+print "<body><div id='printMe'>"; #setup for printing, see script above
+print  "<br>";
+
+$ven0 =~ tr/_\t/ /s;
+print "<FONT SIZE=5 color=#5133FF><i><b>$ven0 - By Shop $shop</FONT></i></b>"; #header
+print  "<br><br><br>";
+
+print "<FONT SIZE=3 color=blue>Customer: </FONT><FONT SIZE=3><b>$quote</b></FONT>\n"; #Customer
+print "<br><br>";
+
+$qprtype =~ tr/_\t/ /s;
+print "<FONT SIZE=3 color=blue>Type: </FONT><FONT SIZE=3><b>$qprtype\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;</b></FONT>\n"; #Type of quote
+print "<br><br>";
+
+$bldg =~ tr/_\t/ /s;
+print "<FONT SIZE=3 color=blue>Project Type: </FONT><FONT SIZE=3><b>$bldg\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;</b></FONT>\n"; #Type of quote
+print "<br><br>";
+
+print " <FONT SIZE=3 color=blue>Work Order (if available): </FONT><FONT SIZE=3><b>$wonumber1</b></FONT>\n"; #work order
+print "-\n";
+print " <FONT SIZE = 3><b>$wonumber2</b></FONT>\n"; #work order phase
+print  "<br><br>";
+
+$orderby =~ tr/_\t/ /s;
+print "<FONT SIZE=3 color=blue>Quote Created By: </FONT><FONT SIZE=3><b>$orderby\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;</b></FONT>\n"; #ordered by
+
+print  "<br><br>";
+print "<FONT SIZE=3 color=blue>Reference: </FONT><FONT SIZE=3><b>Q-$mid</b></FONT>\n";
+print  "<br><br><br>";
+print "<table style=width:100\%>";
+print "<tr><th><font color=blue>ITEM</font></th><th><font color=blue>QTY</font></th><th><font color=blue>UOM</font></th><th><font color=blue>STOCK#</font></th><th><font color=blue>DESCRIPTION</font></th><th><font color=blue>UNIT COST</font></th><th><font color=blue>TOTAL COST</font></th></tr>";
+print "<tr><td>1</td><td>$qty0</td><td>$uom0</td><td>$stockno0</td><td>$des0</td><td>\$$ucost0</td><td>\$$tcost0</td></tr>";
+print "<tr><td>2</td><td>$qty1</td><td>$uom1</td><td>$stockno1</td><td>$des1</td><td>\$$ucost1</td><td>\$$tcost1</td></tr>";
+print "<tr><td>3</td><td>$qty2</td><td>$uom2</td><td>$stockno2</td><td>$des2</td><td>\$$ucost2</td><td>\$$tcost2</td></tr>";
+print "<tr><td>4</td><td>$qty3</td><td>$uom3</td><td>$stockno3</td><td>$des3</td><td>\$$ucost3</td><td>\$$tcost3</td></tr>";
+print "<tr><td>5</td><td>$qty4</td><td>$uom4</td><td>$stockno4</td><td>$des4</td><td>\$$ucost4</td><td>\$$tcost4</td></tr>";
+print "<tr><td>6</td><td>$qty5</td><td>$uom5</td><td>$stockno5</td><td>$des5</td><td>\$$ucost5</td><td>\$$tcost5</td></tr>";
+print "<tr><td>7</td><td>$qty6</td><td>$uom6</td><td>$stockno6</td><td>$des6</td><td>\$$ucost6</td><td>\$$tcost6</td></tr>";
+print "<tr><td>8</td><td>$qty7</td><td>$uom7</td><td>$stockno7</td><td>$des7</td><td>\$$ucost7</td><td>\$$tcost7</td></tr>";
+print "<tr><td>9</td><td>$qty8</td><td>$uom8</td><td>$stockno8</td><td>$des8</td><td>\$$ucost8</td><td>\$$tcost8</td></tr>";
+print "<tr><td>10</td><td>$qty9</td><td>$uom9</td><td>$stockno9</td><td>$des9</td><td>\$$ucost9</td><td>\$$tcost9</td></tr>";
+print "<tr><td bgcolor=black></td><td bgcolor=black></td><td bgcolor=black></td><td bgcolor=black></td><td bgcolor=black></td><td bgcolor=black></td><td align=left><FONT SIZE=4 color=blue>Total Quote \= </FONT><b>\$$sum</b></td></tr>";
+print "</table>";
+print  "<br></div>";
+
+print "<font size=4 color=blue><b>\"Reference:\" </font><font size=4 color=black>above becomes file name.</b></font><br><br>";
+
+print "<form action=$cgiurl>    
+    <input type=button name=print value=\"Print as PDF\" onClick=printDiv('printMe')>\&nbsp\;Choose Destination as <b>\"Save as PDF\" and send file for approval.</b><br><br>
+    <input type=\"submit\" value=\"Create New\" >
+</form>";
+
+print "<button onclick=\"goBack()\">Go Back</button>
+
+<script>
+function goBack() {
+  window.history.back();
+}
+</script>";
+
+print "<br><br>";
+
+
+
+
+print  "<br><br><br>";
+
+print "</body></html>\n";
+exit;
+
+}
+
+
+
+
+
+
+
 
 sub error {               #Process error messages
 print "Content-type: text/html\n\n";
