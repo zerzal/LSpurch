@@ -403,7 +403,7 @@ print  "<option value='Miskow, Michael'>Miskow, Michael</option>\n";
 print  "<option value='Quigley, Eric'>Quigley, Eric</option>\n";
 print  "<option value='Sharpe, David'>Sharpe, David</option>\n";
 print  "<option value='Straughn, Kerry'>Straughn, Kerry</option>\n";
-print  "<option value='Strickler, William'>Strickler, William</option>\n";
+#print  "<option value='Strickler, William'>Strickler, William</option>\n";
 print  "<option value='Thacker, Daniel'>Thacker, Daniel</option>\n";
 print  "</select>\n";
 
