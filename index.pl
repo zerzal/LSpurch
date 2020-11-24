@@ -9,8 +9,8 @@ use warnings;
 
 my $ver = "1.5";
 
-#my $cgiurl = "index.pl";  #un-rem line for production
-my $cgiurl = "lspurch.pl"; #rem line for production
+my $cgiurl = "index.pl";  #un-rem line for production
+#my $cgiurl = "lspurch.pl"; #rem line for production
 my $vensend = "venmail.pl";
 
 my $ymd = sub{sprintf '%02d-%02d-%04d',
@@ -29,8 +29,8 @@ my %FORM;
 my $err;
 my @vendor;
 my $ven;
-my $directory = "\vendors"; #Rem for production
-#my $directory = "/opt/app-root/src/vendors"; # Un-rem For production
+#my $directory = "\vendors"; #Rem for production
+my $directory = "/opt/app-root/src/vendors"; # Un-rem For production
 my $file1;
 my $file2;
 my $file3;
