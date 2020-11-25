@@ -9,8 +9,8 @@ use warnings;
 
 my $ver = "1.5";
 
-my $cgiurl = "index.pl";  #un-rem line for production
-#my $cgiurl = "lspurch.pl"; #rem line for production
+#my $cgiurl = "index.pl";  #un-rem line for production
+my $cgiurl = "lspurch.pl"; #rem line for production
 my $vensend = "venmail.pl";
 
 my $ymd = sub{sprintf '%02d-%02d-%04d',
@@ -29,8 +29,8 @@ my %FORM;
 my $err;
 my @vendor;
 my $ven;
-#my $directory = "\vendors"; #Rem for production
-my $directory = "/opt/app-root/src/vendors"; # Un-rem For production
+my $directory = "\vendors"; #Rem for production
+#my $directory = "/opt/app-root/src/vendors"; # Un-rem For production
 my $file1;
 my $file2;
 my $file3;
@@ -44,7 +44,7 @@ my ($uom0, $uom1, $uom2, $uom3, $uom4, $uom5, $uom6, $uom7, $uom8, $uom9);
 my ($stockno0, $stockno1, $stockno2, $stockno3, $stockno4, $stockno5, $stockno6, $stockno7, $stockno8, $stockno9);
 my ($des0, $des1, $des2, $des3, $des4, $des5, $des6, $des7, $des8, $des9);
 my ($ucost0, $ucost1, $ucost2, $ucost3, $ucost4, $ucost5, $ucost6, $ucost7, $ucost8, $ucost9);
-
+my ($vendor0, $vendor1, $vendor2, $vendor3, $vendor4, $vendor5, $vendor6, $vendor7, $vendor8, $vendor9,); 
 
 # $tcost0, $tcost1, $tcost2, $tcost3, $tcost4, $tcost5, $tcost6, $tcost7, $tcost8, $tcost9)
 
@@ -195,6 +195,17 @@ $uom6 = $FORM{'uom6'};
 $uom7 = $FORM{'uom7'};
 $uom8 = $FORM{'uom8'};
 $uom9 = $FORM{'uom9'};
+
+$vendor0 = $FORM{'vendor0'};
+$vendor1 = $FORM{'vendor1'};
+$vendor2 = $FORM{'vendor2'};
+$vendor3 = $FORM{'vendor3'};
+$vendor4 = $FORM{'vendor4'};
+$vendor5 = $FORM{'vendor5'};
+$vendor6 = $FORM{'vendor6'};
+$vendor7 = $FORM{'vendor7'};
+$vendor8 = $FORM{'vendor8'};
+$vendor9 = $FORM{'vendor9'};
 
 $stockno0 = $FORM{'stockno0'};
 $stockno1 = $FORM{'stockno1'};
@@ -403,7 +414,7 @@ print  "<option value='Miskow, Michael'>Miskow, Michael</option>\n";
 print  "<option value='Quigley, Eric'>Quigley, Eric</option>\n";
 print  "<option value='Sharpe, David'>Sharpe, David</option>\n";
 print  "<option value='Straughn, Kerry'>Straughn, Kerry</option>\n";
-#print  "<option value='Strickler, William'>Strickler, William</option>\n";
+print  "<option value='Strickler, William'>Strickler, William</option>\n";
 print  "<option value='Thacker, Daniel'>Thacker, Daniel</option>\n";
 print  "</select>\n";
 
@@ -634,7 +645,7 @@ print  "</select>\&nbsp\;\&nbsp\;\&nbsp\;\n";
 print "<br><br>";
 
 print "</font><br><br><font size=4 color=blue>";
-print "<b>ITEM\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;QTY\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;UOM\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;STOCK#\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;DESCRIPTION\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;UNIT COST\n";
+print "<b>ITEM\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;QTY\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;UOM\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;VENDOR\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;STOCK#\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;DESCRIPTION\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;UNIT COST\n";
 print "<br><br>";
 print "1\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
 print "<input type=text id=qty0 name=qty0 size=1>\n";
@@ -646,6 +657,37 @@ print  "<option value='KIT'>KIT</option>\n";
 print  "<option value='LABOR'>LABOR</option>\n";
 print  "</select>\&nbsp\;\&nbsp\;\&nbsp\;\n";
 print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+
+
+print  "<select name=vendor0>\n";
+print  "<option></option>\n";
+
+opendir (DIR, $directory) or die $!;
+while ($file = readdir(DIR)) {
+
+		$venfile = $file;
+
+		($file1, $file2) = split /\./, $file;
+		
+		if ($file2 eq "txt") {
+		$file3 = $file1;
+		$file1 =~ s/^.*?://;
+		$file1 =~ tr/ \t/_/s;
+		$file1 =~ s/^_//;
+		
+        print  "<option value=$file1>$file3</option>\n";
+		}
+		
+    }
+
+print  "</select>\n";
+
+
+print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+
+
+
+
 print "<input type=text id=stockno0 name=stockno0 size=10>\n";
 print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
 print "<input type=text id=des0 name=des0 size=15>\n";
@@ -663,6 +705,33 @@ print  "<option value='KIT'>KIT</option>\n";
 print  "<option value='LABOR'>LABOR</option>\n";
 print  "</select>\&nbsp\;\&nbsp\;\&nbsp\;\n";
 print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+
+print  "<select name=vendor1>\n";
+print  "<option></option>\n";
+
+opendir (DIR, $directory) or die $!;
+while ($file = readdir(DIR)) {
+
+		$venfile = $file;
+
+		($file1, $file2) = split /\./, $file;
+		
+		if ($file2 eq "txt") {
+		$file3 = $file1;
+		$file1 =~ s/^.*?://;
+		$file1 =~ tr/ \t/_/s;
+		$file1 =~ s/^_//;
+		
+        print  "<option value=$file1>$file3</option>\n";
+		}
+		
+    }
+
+print  "</select>\n";
+
+
+print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+
 print "<input type=text id=stockno1 name=stockno1 size=10>\n";
 print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
 print "<input type=text id=des1 name=des1 size=15>\n";
@@ -680,6 +749,33 @@ print  "<option value='KIT'>KIT</option>\n";
 print  "<option value='LABOR'>LABOR</option>\n";
 print  "</select>\&nbsp\;\&nbsp\;\&nbsp\;\n";
 print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+
+print  "<select name=vendor2>\n";
+print  "<option></option>\n";
+
+opendir (DIR, $directory) or die $!;
+while ($file = readdir(DIR)) {
+
+		$venfile = $file;
+
+		($file1, $file2) = split /\./, $file;
+		
+		if ($file2 eq "txt") {
+		$file3 = $file1;
+		$file1 =~ s/^.*?://;
+		$file1 =~ tr/ \t/_/s;
+		$file1 =~ s/^_//;
+		
+        print  "<option value=$file1>$file3</option>\n";
+		}
+		
+    }
+
+print  "</select>\n";
+
+
+print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+
 print "<input type=text id=stockno2 name=stockno2 size=10>\n";
 print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
 print "<input type=text id=des2 name=des2 size=15>\n";
@@ -697,6 +793,33 @@ print  "<option value='KIT'>KIT</option>\n";
 print  "<option value='LABOR'>LABOR</option>\n";
 print  "</select>\&nbsp\;\&nbsp\;\&nbsp\;\n";
 print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+
+print  "<select name=vendor3>\n";
+print  "<option></option>\n";
+
+opendir (DIR, $directory) or die $!;
+while ($file = readdir(DIR)) {
+
+		$venfile = $file;
+
+		($file1, $file2) = split /\./, $file;
+		
+		if ($file2 eq "txt") {
+		$file3 = $file1;
+		$file1 =~ s/^.*?://;
+		$file1 =~ tr/ \t/_/s;
+		$file1 =~ s/^_//;
+		
+        print  "<option value=$file1>$file3</option>\n";
+		}
+		
+    }
+
+print  "</select>\n";
+
+
+print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+
 print "<input type=text id=stockno3 name=stockno3 size=10>\n";
 print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
 print "<input type=text id=des3 name=des3 size=15>\n";
@@ -714,6 +837,33 @@ print  "<option value='KIT'>KIT</option>\n";
 print  "<option value='LABOR'>LABOR</option>\n";
 print  "</select>\&nbsp\;\&nbsp\;\&nbsp\;\n";
 print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+
+print  "<select name=vendor4>\n";
+print  "<option></option>\n";
+
+opendir (DIR, $directory) or die $!;
+while ($file = readdir(DIR)) {
+
+		$venfile = $file;
+
+		($file1, $file2) = split /\./, $file;
+		
+		if ($file2 eq "txt") {
+		$file3 = $file1;
+		$file1 =~ s/^.*?://;
+		$file1 =~ tr/ \t/_/s;
+		$file1 =~ s/^_//;
+		
+        print  "<option value=$file1>$file3</option>\n";
+		}
+		
+    }
+
+print  "</select>\n";
+
+
+print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+
 print "<input type=text id=stockno4 name=stockno4 size=10>\n";
 print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
 print "<input type=text id=des4 name=des4 size=15>\n";
@@ -731,6 +881,33 @@ print  "<option value='KIT'>KIT</option>\n";
 print  "<option value='LABOR'>LABOR</option>\n";
 print  "</select>\&nbsp\;\&nbsp\;\&nbsp\;\n";
 print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+
+print  "<select name=vendor5>\n";
+print  "<option></option>\n";
+
+opendir (DIR, $directory) or die $!;
+while ($file = readdir(DIR)) {
+
+		$venfile = $file;
+
+		($file1, $file2) = split /\./, $file;
+		
+		if ($file2 eq "txt") {
+		$file3 = $file1;
+		$file1 =~ s/^.*?://;
+		$file1 =~ tr/ \t/_/s;
+		$file1 =~ s/^_//;
+		
+        print  "<option value=$file1>$file3</option>\n";
+		}
+		
+    }
+
+print  "</select>\n";
+
+
+print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+
 print "<input type=text id=stockno5 name=stockno5 size=10>\n";
 print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
 print "<input type=text id=des5 name=des5 size=15>\n";
@@ -748,6 +925,33 @@ print  "<option value='KIT'>KIT</option>\n";
 print  "<option value='LABOR'>LABOR</option>\n";
 print  "</select>\&nbsp\;\&nbsp\;\&nbsp\;\n";
 print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+
+print  "<select name=vendor6>\n";
+print  "<option></option>\n";
+
+opendir (DIR, $directory) or die $!;
+while ($file = readdir(DIR)) {
+
+		$venfile = $file;
+
+		($file1, $file2) = split /\./, $file;
+		
+		if ($file2 eq "txt") {
+		$file3 = $file1;
+		$file1 =~ s/^.*?://;
+		$file1 =~ tr/ \t/_/s;
+		$file1 =~ s/^_//;
+		
+        print  "<option value=$file1>$file3</option>\n";
+		}
+		
+    }
+
+print  "</select>\n";
+
+
+print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+
 print "<input type=text id=stockno6 name=stockno6 size=10>\n";
 print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
 print "<input type=text id=des6 name=des6 size=15>\n";
@@ -765,6 +969,33 @@ print  "<option value='KIT'>KIT</option>\n";
 print  "<option value='LABOR'>LABOR</option>\n";
 print  "</select>\&nbsp\;\&nbsp\;\&nbsp\;\n";
 print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+
+print  "<select name=vendor7>\n";
+print  "<option></option>\n";
+
+opendir (DIR, $directory) or die $!;
+while ($file = readdir(DIR)) {
+
+		$venfile = $file;
+
+		($file1, $file2) = split /\./, $file;
+		
+		if ($file2 eq "txt") {
+		$file3 = $file1;
+		$file1 =~ s/^.*?://;
+		$file1 =~ tr/ \t/_/s;
+		$file1 =~ s/^_//;
+		
+        print  "<option value=$file1>$file3</option>\n";
+		}
+		
+    }
+
+print  "</select>\n";
+
+
+print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+
 print "<input type=text id=stockno7 name=stockno7 size=10>\n";
 print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
 print "<input type=text id=des7 name=des7 size=15>\n";
@@ -782,6 +1013,33 @@ print  "<option value='KIT'>KIT</option>\n";
 print  "<option value='LABOR'>LABOR</option>\n";
 print  "</select>\&nbsp\;\&nbsp\;\&nbsp\;\n";
 print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+
+print  "<select name=vendor8>\n";
+print  "<option></option>\n";
+
+opendir (DIR, $directory) or die $!;
+while ($file = readdir(DIR)) {
+
+		$venfile = $file;
+
+		($file1, $file2) = split /\./, $file;
+		
+		if ($file2 eq "txt") {
+		$file3 = $file1;
+		$file1 =~ s/^.*?://;
+		$file1 =~ tr/ \t/_/s;
+		$file1 =~ s/^_//;
+		
+        print  "<option value=$file1>$file3</option>\n";
+		}
+		
+    }
+
+print  "</select>\n";
+
+
+print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+
 print "<input type=text id=stockno8 name=stockno8 size=10>\n";
 print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
 print "<input type=text id=des8 name=des8 size=15>\n";
@@ -799,6 +1057,33 @@ print  "<option value='KIT'>KIT</option>\n";
 print  "<option value='LABOR'>LABOR</option>\n";
 print  "</select>\&nbsp\;\&nbsp\;\&nbsp\;\n";
 print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+
+print  "<select name=vendor9>\n";
+print  "<option></option>\n";
+
+opendir (DIR, $directory) or die $!;
+while ($file = readdir(DIR)) {
+
+		$venfile = $file;
+
+		($file1, $file2) = split /\./, $file;
+		
+		if ($file2 eq "txt") {
+		$file3 = $file1;
+		$file1 =~ s/^.*?://;
+		$file1 =~ tr/ \t/_/s;
+		$file1 =~ s/^_//;
+		
+        print  "<option value=$file1>$file3</option>\n";
+		}
+		
+    }
+
+print  "</select>\n";
+
+
+print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+
 print "<input type=text id=stockno9 name=stockno9 size=10>\n";
 print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
 print "<input type=text id=des9 name=des9 size=15>\n";
@@ -1093,18 +1378,18 @@ print  "<br><br>";
 print "<FONT SIZE=3 color=blue>Reference: </FONT><FONT SIZE=3><b>Q-$mid</b></FONT>\n";
 print  "<br><br><br>";
 print "<table style=width:100\%>";
-print "<tr><th><font color=blue>ITEM</font></th><th><font color=blue>QTY</font></th><th><font color=blue>UOM</font></th><th><font color=blue>STOCK#</font></th><th><font color=blue>DESCRIPTION</font></th><th><font color=blue>UNIT COST</font></th><th><font color=blue>TOTAL COST</font></th></tr>";
-print "<tr><td>1</td><td>$qty0</td><td>$uom0</td><td>$stockno0</td><td>$des0</td><td>\$$ucost0</td><td>\$$tcost0</td></tr>";
-print "<tr><td>2</td><td>$qty1</td><td>$uom1</td><td>$stockno1</td><td>$des1</td><td>\$$ucost1</td><td>\$$tcost1</td></tr>";
-print "<tr><td>3</td><td>$qty2</td><td>$uom2</td><td>$stockno2</td><td>$des2</td><td>\$$ucost2</td><td>\$$tcost2</td></tr>";
-print "<tr><td>4</td><td>$qty3</td><td>$uom3</td><td>$stockno3</td><td>$des3</td><td>\$$ucost3</td><td>\$$tcost3</td></tr>";
-print "<tr><td>5</td><td>$qty4</td><td>$uom4</td><td>$stockno4</td><td>$des4</td><td>\$$ucost4</td><td>\$$tcost4</td></tr>";
-print "<tr><td>6</td><td>$qty5</td><td>$uom5</td><td>$stockno5</td><td>$des5</td><td>\$$ucost5</td><td>\$$tcost5</td></tr>";
-print "<tr><td>7</td><td>$qty6</td><td>$uom6</td><td>$stockno6</td><td>$des6</td><td>\$$ucost6</td><td>\$$tcost6</td></tr>";
-print "<tr><td>8</td><td>$qty7</td><td>$uom7</td><td>$stockno7</td><td>$des7</td><td>\$$ucost7</td><td>\$$tcost7</td></tr>";
-print "<tr><td>9</td><td>$qty8</td><td>$uom8</td><td>$stockno8</td><td>$des8</td><td>\$$ucost8</td><td>\$$tcost8</td></tr>";
-print "<tr><td>10</td><td>$qty9</td><td>$uom9</td><td>$stockno9</td><td>$des9</td><td>\$$ucost9</td><td>\$$tcost9</td></tr>";
-print "<tr><td bgcolor=black></td><td bgcolor=black></td><td bgcolor=black></td><td bgcolor=black></td><td bgcolor=black></td><td bgcolor=black></td><td align=left><FONT SIZE=4 color=blue>Total Quote \= </FONT><b>\$$sum</b></td></tr>";
+print "<tr><th><font color=blue>ITEM</font></th><th><font color=blue>QTY</font></th><th><font color=blue>UOM</font></th><th><font color=blue>VENDOR</font></th><th><font color=blue>STOCK#</font></th><th><font color=blue>DESCRIPTION</font></th><th><font color=blue>UNIT COST</font></th><th><font color=blue>TOTAL COST</font></th></tr>";
+print "<tr><td>1</td><td>$qty0</td><td>$uom0</td><td>$vendor0</td><td>$stockno0</td><td>$des0</td><td>\$$ucost0</td><td>\$$tcost0</td></tr>";
+print "<tr><td>2</td><td>$qty1</td><td>$uom1</td><td>$vendor1</td><td>$stockno1</td><td>$des1</td><td>\$$ucost1</td><td>\$$tcost1</td></tr>";
+print "<tr><td>3</td><td>$qty2</td><td>$uom2</td><td>$vendor2</td><td>$stockno2</td><td>$des2</td><td>\$$ucost2</td><td>\$$tcost2</td></tr>";
+print "<tr><td>4</td><td>$qty3</td><td>$uom3</td><td>$vendor3</td><td>$stockno3</td><td>$des3</td><td>\$$ucost3</td><td>\$$tcost3</td></tr>";
+print "<tr><td>5</td><td>$qty4</td><td>$uom4</td><td>$vendor4</td><td>$stockno4</td><td>$des4</td><td>\$$ucost4</td><td>\$$tcost4</td></tr>";
+print "<tr><td>6</td><td>$qty5</td><td>$uom5</td><td>$vendor5</td><td>$stockno5</td><td>$des5</td><td>\$$ucost5</td><td>\$$tcost5</td></tr>";
+print "<tr><td>7</td><td>$qty6</td><td>$uom6</td><td>$vendor6</td><td>$stockno6</td><td>$des6</td><td>\$$ucost6</td><td>\$$tcost6</td></tr>";
+print "<tr><td>8</td><td>$qty7</td><td>$uom7</td><td>$vendor7</td><td>$stockno7</td><td>$des7</td><td>\$$ucost7</td><td>\$$tcost7</td></tr>";
+print "<tr><td>9</td><td>$qty8</td><td>$uom8</td><td>$vendor8</td><td>$stockno8</td><td>$des8</td><td>\$$ucost8</td><td>\$$tcost8</td></tr>";
+print "<tr><td>10</td><td>$qty9</td><td>$uom9</td><td>$vendor9</td><td>$stockno9</td><td>$des9</td><td>\$$ucost9</td><td>\$$tcost9</td></tr>";
+print "<tr><td bgcolor=black></td><td bgcolor=black></td><td bgcolor=black></td><td bgcolor=black></td><td bgcolor=black></td><td bgcolor=black></td><td bgcolor=black></td><td align=left><FONT SIZE=4 color=blue>Total Quote \= </FONT><b>\$$sum</b></td></tr>";
 print "</table>";
 print  "<br></div>";
 
