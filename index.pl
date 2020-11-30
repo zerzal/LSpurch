@@ -7,7 +7,7 @@ use warnings;
 # Set Variables
 #######################
 
-my $ver = "1.5";
+my $ver = "1.6";
 
 my $cgiurl = "index.pl";  #un-rem line for production
 #my $cgiurl = "lspurch.pl"; #rem line for production
@@ -277,7 +277,7 @@ print "<body><FONT SIZE = 5><b>$title</b></FONT><FONT SIZE = 2 color = red>\&nbs
 print "</font><br>\n";
 print "<form method=POST action= $cgiurl>\n";
 print "<input type=hidden id=hide name=hide value=0>";
-print "Choose the <b>VENDOR</b>\:\&nbsp\;\&nbsp\;\n";
+print "Choose the <b>VENDOR or QUOTE FOR CUSTOMER</b>\:\&nbsp\;\&nbsp\;\n";
 print  "<select name=vendor>\n";
 print  "<option></option>\n";
 
@@ -304,7 +304,7 @@ print  "<br><br>";
 print "<input type=submit> * <input type=reset><br><br></form>\n";
 print "<font size=5 color=blue>IF VENDOR NOT IN LIST</font><br><br>\n";
 print "<form method=POST action=$vensend>\n";
-print "Enter vendor name:<br><br>\n";
+print "Enter new vendor name:<br><br>\n";
 print "<input type=text id=newven name=newven size=40>";
 print "<br><br>";
 print "Enter your name:<br><br>\n";
@@ -643,24 +643,34 @@ print  "<option value='Miskow, Michael'>Miskow, Michael</option>\n";
 print  "<option value='Thacker, Daniel'>Thacker, Daniel</option>\n";
 print  "</select>\&nbsp\;\&nbsp\;\&nbsp\;\n";
 print "<br><br>";
+print "</font>";
 
-print "</font><br><br><font size=4 color=blue>";
-print "<b>ITEM\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;QTY\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;UOM\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;VENDOR\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;STOCK#\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;DESCRIPTION\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;UNIT COST\n";
+print "<font color=red size=4><b><i>* If vendor not in list click \"Go Home\" at bottom and use \"IF VENDOR NOT IN LIST\" </font></b></i>\n";
 print "<br><br>";
-print "1\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+
+#line headers
+print "<table style=width:85\%>";
+
+print "<tr><th style=text-align:left><font color=blue>ITEM</font></th><th style=text-align:left><font color=blue>QTY</font></th><th style=text-align:left><font color=blue>UOM</font></th><th style=text-align:left><font color=blue>VENDOR</font></th><th style=text-align:left><font color=blue>STOCK#</font></th><th style=text-align:left><font color=blue>DESCRIPTION</font></th><th style=text-align:left><font color=blue>UNIT COST</font></th></tr>";
+
+#line 1
+print "<tr><td style=text-align:center>";
+print "1";
+print "</td>";
+print "<td style=text-align:left>";
 print "<input type=text id=qty0 name=qty0 size=1>\n";
-print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+print "</td>";
+print "<td>";
 print "<select id=uom0 name=uom0>\n";
-print  "<option value='EA'>EA</option>\n";
-print  "<option value='LOT'>LOT</option>\n";
-print  "<option value='KIT'>KIT</option>\n";
-print  "<option value='LABOR'>LABOR</option>\n";
-print  "</select>\&nbsp\;\&nbsp\;\&nbsp\;\n";
-print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
-
-
-print  "<select name=vendor0>\n";
-print  "<option></option>\n";
+print "<option value='EA'>EA</option>\n";
+print "<option value='LOT'>LOT</option>\n";
+print "<option value='KIT'>KIT</option>\n";
+print "<option value='LABOR'>LABOR</option>\n";
+print "</select>\n";
+print "</td>";
+print "<td>";
+print "<select name=vendor0>\n";
+print "<option></option>\n";
 
 opendir (DIR, $directory) or die $!;
 while ($file = readdir(DIR)) {
@@ -681,33 +691,35 @@ while ($file = readdir(DIR)) {
     }
 
 print  "</select>\n";
-
-
-print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
-
-
-
-
+print "<td>";
 print "<input type=text id=stockno0 name=stockno0 size=10>\n";
-print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+print "</td>";
+print "<td>";
 print "<input type=text id=des0 name=des0 size=15>\n";
-print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\$";
-print "<input type=text id=ucost0 name=ucost0 size=4>\n";
-print "<br><br>";
+print "</td>";
+print "<td>";
+print "\$<input type=text id=ucost0 name=ucost0 size=4>\n";
+print "</td>";
+print "</tr>";
 
-print "2\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+#line 2
+print "<tr><td style=text-align:center>";
+print "2";
+print "</td>";
+print "<td style=text-align:left>";
 print "<input type=text id=qty1 name=qty1 size=1>\n";
-print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+print "</td>";
+print "<td>";
 print "<select id=uom1 name=uom1>\n";
-print  "<option value='EA'>EA</option>\n";
-print  "<option value='LOT'>LOT</option>\n";
-print  "<option value='KIT'>KIT</option>\n";
-print  "<option value='LABOR'>LABOR</option>\n";
-print  "</select>\&nbsp\;\&nbsp\;\&nbsp\;\n";
-print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
-
-print  "<select name=vendor1>\n";
-print  "<option></option>\n";
+print "<option value='EA'>EA</option>\n";
+print "<option value='LOT'>LOT</option>\n";
+print "<option value='KIT'>KIT</option>\n";
+print "<option value='LABOR'>LABOR</option>\n";
+print "</select>\n";
+print "</td>";
+print "<td>";
+print "<select name=vendor1>\n";
+print "<option></option>\n";
 
 opendir (DIR, $directory) or die $!;
 while ($file = readdir(DIR)) {
@@ -728,30 +740,35 @@ while ($file = readdir(DIR)) {
     }
 
 print  "</select>\n";
-
-
-print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
-
+print "<td>";
 print "<input type=text id=stockno1 name=stockno1 size=10>\n";
-print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+print "</td>";
+print "<td>";
 print "<input type=text id=des1 name=des1 size=15>\n";
-print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\$";
-print "<input type=text id=ucost1 name=ucost1 size=4>\n";
+print "</td>";
+print "<td>";
+print "\$<input type=text id=ucost1 name=ucost1 size=4>\n";
+print "</td>";
+print "</tr>";
 
-print "<br><br>";
-print "3\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+#line 3
+print "<tr><td style=text-align:center>";
+print "3";
+print "</td>";
+print "<td style=text-align:left>";
 print "<input type=text id=qty2 name=qty2 size=1>\n";
-print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+print "</td>";
+print "<td>";
 print "<select id=uom2 name=uom2>\n";
-print  "<option value='EA'>EA</option>\n";
-print  "<option value='LOT'>LOT</option>\n";
-print  "<option value='KIT'>KIT</option>\n";
-print  "<option value='LABOR'>LABOR</option>\n";
-print  "</select>\&nbsp\;\&nbsp\;\&nbsp\;\n";
-print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
-
-print  "<select name=vendor2>\n";
-print  "<option></option>\n";
+print "<option value='EA'>EA</option>\n";
+print "<option value='LOT'>LOT</option>\n";
+print "<option value='KIT'>KIT</option>\n";
+print "<option value='LABOR'>LABOR</option>\n";
+print "</select>\n";
+print "</td>";
+print "<td>";
+print "<select name=vendor2>\n";
+print "<option></option>\n";
 
 opendir (DIR, $directory) or die $!;
 while ($file = readdir(DIR)) {
@@ -772,30 +789,35 @@ while ($file = readdir(DIR)) {
     }
 
 print  "</select>\n";
-
-
-print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
-
+print "<td>";
 print "<input type=text id=stockno2 name=stockno2 size=10>\n";
-print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+print "</td>";
+print "<td>";
 print "<input type=text id=des2 name=des2 size=15>\n";
-print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\$";
-print "<input type=text id=ucost2 name=ucost2 size=4>\n";
+print "</td>";
+print "<td>";
+print "\$<input type=text id=ucost2 name=ucost2 size=4>\n";
+print "</td>";
+print "</tr>";
 
-print "<br><br>";
-print "4\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+#line 4
+print "<tr><td style=text-align:center>";
+print "4";
+print "</td>";
+print "<td style=text-align:left>";
 print "<input type=text id=qty3 name=qty3 size=1>\n";
-print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+print "</td>";
+print "<td>";
 print "<select id=uom3 name=uom3>\n";
-print  "<option value='EA'>EA</option>\n";
-print  "<option value='LOT'>LOT</option>\n";
-print  "<option value='KIT'>KIT</option>\n";
-print  "<option value='LABOR'>LABOR</option>\n";
-print  "</select>\&nbsp\;\&nbsp\;\&nbsp\;\n";
-print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
-
-print  "<select name=vendor3>\n";
-print  "<option></option>\n";
+print "<option value='EA'>EA</option>\n";
+print "<option value='LOT'>LOT</option>\n";
+print "<option value='KIT'>KIT</option>\n";
+print "<option value='LABOR'>LABOR</option>\n";
+print "</select>\n";
+print "</td>";
+print "<td>";
+print "<select name=vendor3>\n";
+print "<option></option>\n";
 
 opendir (DIR, $directory) or die $!;
 while ($file = readdir(DIR)) {
@@ -816,30 +838,35 @@ while ($file = readdir(DIR)) {
     }
 
 print  "</select>\n";
-
-
-print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
-
+print "<td>";
 print "<input type=text id=stockno3 name=stockno3 size=10>\n";
-print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+print "</td>";
+print "<td>";
 print "<input type=text id=des3 name=des3 size=15>\n";
-print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\$";
-print "<input type=text id=ucost3 name=ucost3 size=4>\n";
+print "</td>";
+print "<td>";
+print "\$<input type=text id=ucost3 name=ucost3 size=4>\n";
+print "</td>";
+print "</tr>";
 
-print "<br><br>";
-print "5\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+#line 5
+print "<tr><td style=text-align:center>";
+print "5";
+print "</td>";
+print "<td style=text-align:left>";
 print "<input type=text id=qty4 name=qty4 size=1>\n";
-print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+print "</td>";
+print "<td>";
 print "<select id=uom4 name=uom4>\n";
-print  "<option value='EA'>EA</option>\n";
-print  "<option value='LOT'>LOT</option>\n";
-print  "<option value='KIT'>KIT</option>\n";
-print  "<option value='LABOR'>LABOR</option>\n";
-print  "</select>\&nbsp\;\&nbsp\;\&nbsp\;\n";
-print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
-
-print  "<select name=vendor4>\n";
-print  "<option></option>\n";
+print "<option value='EA'>EA</option>\n";
+print "<option value='LOT'>LOT</option>\n";
+print "<option value='KIT'>KIT</option>\n";
+print "<option value='LABOR'>LABOR</option>\n";
+print "</select>\n";
+print "</td>";
+print "<td>";
+print "<select name=vendor4>\n";
+print "<option></option>\n";
 
 opendir (DIR, $directory) or die $!;
 while ($file = readdir(DIR)) {
@@ -860,30 +887,36 @@ while ($file = readdir(DIR)) {
     }
 
 print  "</select>\n";
-
-
-print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
-
+print "<td>";
 print "<input type=text id=stockno4 name=stockno4 size=10>\n";
-print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+print "</td>";
+print "<td>";
 print "<input type=text id=des4 name=des4 size=15>\n";
-print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\$";
-print "<input type=text id=ucost4 name=ucost4 size=4>\n";
+print "</td>";
+print "<td>";
+print "\$<input type=text id=ucost4 name=ucost4 size=4>\n";
+print "</td>";
+print "</tr>";
 
-print "<br><br>";
-print "6\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+
+#line 6
+print "<tr><td style=text-align:center>";
+print "6";
+print "</td>";
+print "<td style=text-align:left>";
 print "<input type=text id=qty5 name=qty5 size=1>\n";
-print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+print "</td>";
+print "<td>";
 print "<select id=uom5 name=uom5>\n";
-print  "<option value='EA'>EA</option>\n";
-print  "<option value='LOT'>LOT</option>\n";
-print  "<option value='KIT'>KIT</option>\n";
-print  "<option value='LABOR'>LABOR</option>\n";
-print  "</select>\&nbsp\;\&nbsp\;\&nbsp\;\n";
-print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
-
-print  "<select name=vendor5>\n";
-print  "<option></option>\n";
+print "<option value='EA'>EA</option>\n";
+print "<option value='LOT'>LOT</option>\n";
+print "<option value='KIT'>KIT</option>\n";
+print "<option value='LABOR'>LABOR</option>\n";
+print "</select>\n";
+print "</td>";
+print "<td>";
+print "<select name=vendor5>\n";
+print "<option></option>\n";
 
 opendir (DIR, $directory) or die $!;
 while ($file = readdir(DIR)) {
@@ -904,30 +937,36 @@ while ($file = readdir(DIR)) {
     }
 
 print  "</select>\n";
-
-
-print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
-
+print "<td>";
 print "<input type=text id=stockno5 name=stockno5 size=10>\n";
-print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+print "</td>";
+print "<td>";
 print "<input type=text id=des5 name=des5 size=15>\n";
-print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\$";
-print "<input type=text id=ucost5 name=ucost5 size=4>\n";
+print "</td>";
+print "<td>";
+print "\$<input type=text id=ucost5 name=ucost5 size=4>\n";
+print "</td>";
+print "</tr>";
 
-print "<br><br>";
-print "7\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+
+#line 7
+print "<tr><td style=text-align:center>";
+print "7";
+print "</td>";
+print "<td style=text-align:left>";
 print "<input type=text id=qty6 name=qty6 size=1>\n";
-print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+print "</td>";
+print "<td>";
 print "<select id=uom6 name=uom6>\n";
-print  "<option value='EA'>EA</option>\n";
-print  "<option value='LOT'>LOT</option>\n";
-print  "<option value='KIT'>KIT</option>\n";
-print  "<option value='LABOR'>LABOR</option>\n";
-print  "</select>\&nbsp\;\&nbsp\;\&nbsp\;\n";
-print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
-
-print  "<select name=vendor6>\n";
-print  "<option></option>\n";
+print "<option value='EA'>EA</option>\n";
+print "<option value='LOT'>LOT</option>\n";
+print "<option value='KIT'>KIT</option>\n";
+print "<option value='LABOR'>LABOR</option>\n";
+print "</select>\n";
+print "</td>";
+print "<td>";
+print "<select name=vendor6>\n";
+print "<option></option>\n";
 
 opendir (DIR, $directory) or die $!;
 while ($file = readdir(DIR)) {
@@ -948,30 +987,36 @@ while ($file = readdir(DIR)) {
     }
 
 print  "</select>\n";
-
-
-print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
-
+print "<td>";
 print "<input type=text id=stockno6 name=stockno6 size=10>\n";
-print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+print "</td>";
+print "<td>";
 print "<input type=text id=des6 name=des6 size=15>\n";
-print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\$";
-print "<input type=text id=ucost6 name=ucost6 size=4>\n";
+print "</td>";
+print "<td>";
+print "\$<input type=text id=ucost6 name=ucost6 size=4>\n";
+print "</td>";
+print "</tr>";
 
-print "<br><br>";
-print "8\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+
+#line 8
+print "<tr><td style=text-align:center>";
+print "8";
+print "</td>";
+print "<td style=text-align:left>";
 print "<input type=text id=qty7 name=qty7 size=1>\n";
-print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+print "</td>";
+print "<td>";
 print "<select id=uom7 name=uom7>\n";
-print  "<option value='EA'>EA</option>\n";
-print  "<option value='LOT'>LOT</option>\n";
-print  "<option value='KIT'>KIT</option>\n";
-print  "<option value='LABOR'>LABOR</option>\n";
-print  "</select>\&nbsp\;\&nbsp\;\&nbsp\;\n";
-print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
-
-print  "<select name=vendor7>\n";
-print  "<option></option>\n";
+print "<option value='EA'>EA</option>\n";
+print "<option value='LOT'>LOT</option>\n";
+print "<option value='KIT'>KIT</option>\n";
+print "<option value='LABOR'>LABOR</option>\n";
+print "</select>\n";
+print "</td>";
+print "<td>";
+print "<select name=vendor7>\n";
+print "<option></option>\n";
 
 opendir (DIR, $directory) or die $!;
 while ($file = readdir(DIR)) {
@@ -992,30 +1037,35 @@ while ($file = readdir(DIR)) {
     }
 
 print  "</select>\n";
-
-
-print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
-
+print "<td>";
 print "<input type=text id=stockno7 name=stockno7 size=10>\n";
-print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+print "</td>";
+print "<td>";
 print "<input type=text id=des7 name=des7 size=15>\n";
-print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\$";
-print "<input type=text id=ucost7 name=ucost7 size=4>\n";
+print "</td>";
+print "<td>";
+print "\$<input type=text id=ucost7 name=ucost7 size=4>\n";
+print "</td>";
+print "</tr>";
 
-print "<br><br>";
-print "9\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+#line 9
+print "<tr><td style=text-align:center>";
+print "9";
+print "</td>";
+print "<td style=text-align:left>";
 print "<input type=text id=qty8 name=qty8 size=1>\n";
-print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+print "</td>";
+print "<td>";
 print "<select id=uom8 name=uom8>\n";
-print  "<option value='EA'>EA</option>\n";
-print  "<option value='LOT'>LOT</option>\n";
-print  "<option value='KIT'>KIT</option>\n";
-print  "<option value='LABOR'>LABOR</option>\n";
-print  "</select>\&nbsp\;\&nbsp\;\&nbsp\;\n";
-print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
-
-print  "<select name=vendor8>\n";
-print  "<option></option>\n";
+print "<option value='EA'>EA</option>\n";
+print "<option value='LOT'>LOT</option>\n";
+print "<option value='KIT'>KIT</option>\n";
+print "<option value='LABOR'>LABOR</option>\n";
+print "</select>\n";
+print "</td>";
+print "<td>";
+print "<select name=vendor8>\n";
+print "<option></option>\n";
 
 opendir (DIR, $directory) or die $!;
 while ($file = readdir(DIR)) {
@@ -1036,30 +1086,36 @@ while ($file = readdir(DIR)) {
     }
 
 print  "</select>\n";
-
-
-print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
-
+print "<td>";
 print "<input type=text id=stockno8 name=stockno8 size=10>\n";
-print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+print "</td>";
+print "<td>";
 print "<input type=text id=des8 name=des8 size=15>\n";
-print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\$";
-print "<input type=text id=ucost8 name=ucost8 size=4>\n";
+print "</td>";
+print "<td>";
+print "\$<input type=text id=ucost8 name=ucost8 size=4>\n";
+print "</td>";
+print "</tr>";
 
-print "<br><br>";
-print "10\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+
+#line 10
+print "<tr><td style=text-align:center>";
+print "10";
+print "</td>";
+print "<td style=text-align:left>";
 print "<input type=text id=qty9 name=qty9 size=1>\n";
-print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+print "</td>";
+print "<td>";
 print "<select id=uom9 name=uom9>\n";
-print  "<option value='EA'>EA</option>\n";
-print  "<option value='LOT'>LOT</option>\n";
-print  "<option value='KIT'>KIT</option>\n";
-print  "<option value='LABOR'>LABOR</option>\n";
-print  "</select>\&nbsp\;\&nbsp\;\&nbsp\;\n";
-print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
-
-print  "<select name=vendor9>\n";
-print  "<option></option>\n";
+print "<option value='EA'>EA</option>\n";
+print "<option value='LOT'>LOT</option>\n";
+print "<option value='KIT'>KIT</option>\n";
+print "<option value='LABOR'>LABOR</option>\n";
+print "</select>\n";
+print "</td>";
+print "<td>";
+print "<select name=vendor9>\n";
+print "<option></option>\n";
 
 opendir (DIR, $directory) or die $!;
 while ($file = readdir(DIR)) {
@@ -1080,16 +1136,20 @@ while ($file = readdir(DIR)) {
     }
 
 print  "</select>\n";
-
-
-print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
-
+print "<td>";
 print "<input type=text id=stockno9 name=stockno9 size=10>\n";
-print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;";
+print "</td>";
+print "<td>";
 print "<input type=text id=des9 name=des9 size=15>\n";
-print "\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\&nbsp\;\$";
-print "<input type=text id=ucost9 name=ucost9 size=4>\n";
-print "</font><br><br></b>";
+print "</td>";
+print "<td>";
+print "\$<input type=text id=ucost9 name=ucost9 size=4>\n";
+print "</td>";
+print "</tr>";
+print "</table>";
+
+#submit form
+print "<br><br></b>";
 print "<input type=submit> * <input type=reset><br>\n";
 print "</form>";
 print "<form action=$cgiurl>
