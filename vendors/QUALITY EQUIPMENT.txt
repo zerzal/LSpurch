@@ -1,0 +1,8 @@
+vendor: QUALITY EQUIPMENT, LLC  ven# 34612
+address: 3821 Durham Chapel Hill Blvd., Durham, NC 27707
+phone: 919-493-3545
+fax:  919-490-5341
+cust: 
+rep: Jem Morrow
+cell: 
+email: 
