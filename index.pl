@@ -17,7 +17,7 @@ my $ymd = sub{sprintf '%02d-%02d-%04d',
     $_[4]+1, $_[3], $_[5]+1900, }->(localtime);
 	
 my $shop = "245302";
-my $title = "SHOP $shop PURCHASING/REPAIR/CUSTOMER QUOTE";
+my $title = "SHOP $shop PURCHASING/REPAIR/CUSTOMER QUOTE FORM";
 my $wonumber;
 my $venfile;
 #my $allow_html = 0;
@@ -331,7 +331,10 @@ open ($cvf, "<$directory/$ven.txt")  || die "Cannot open vendor file: $!\n";
 		}			
 close $cvf;		
 
-
+$title = "SHOP $shop PURCHASING/REPAIR FORM";
+if ($newlist[0] =~ m/QUOTE/) {
+	$title = "SHOP $shop CUSTOMER QUOTE FORM";	
+	}
 print "Content-type: text/html\n\n";
 print "<html><head><title>$title</title></head>\n";
 print "<body><FONT SIZE = 5><b><center>$title</b></FONT><FONT SIZE = 2 color = red>\&nbsp\;\&nbsp\;<b>$ver</center></b></font><br><br>\n";
@@ -356,6 +359,7 @@ foreach (@newlist) {
 	
 	
 	if ($newlist[0] =~ m/QUOTE/) {
+	$title = "SHOP $shop CUSTOMER QUOTE FORM";	
 	$vquote = $newlist[0];
 	&cquote;
 	}
@@ -1233,7 +1237,7 @@ print "<script>
 		}
 	</script>";
 
-
+$title = "SHOP $shop PURCHASING/REPAIR FORM";
 print "<body><div id='printMe'><font size=5><i><b><center>$title</center></i></b></font>";
 print  "<br>";
 
@@ -1501,12 +1505,3 @@ print "</body></html>\n";
 exit;
 
 }
-
-
-
-
-
-
-
-
-
