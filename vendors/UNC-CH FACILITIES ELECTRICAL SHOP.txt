@@ -1,0 +1,8 @@
+vendor: UNC-CH FACILITIES ELECTRICAL SHOP
+address: Facility Shops, Facilities Dr
+phone: 919-962-1146/919-962-7477
+fax:  
+cust: shop 246203
+rep: Fogleman, Jeff
+cell: 919-695-6074
+email: jeffrey.fogleman@facilities.unc.edu
