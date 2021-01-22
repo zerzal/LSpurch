@@ -1,0 +1,8 @@
+vendor: UNC-CH LIFE SAFETY SHOP
+address: 136L Gile Horney Bldg, Chapel Hill, NC
+phone: 
+fax:  
+cust: shop 245302
+rep: Hill, James Jr
+cell: 919-904-0199
+email: james.hill@facilities.unc.edu
