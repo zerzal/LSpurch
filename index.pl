@@ -1,5 +1,5 @@
 #!/afs/isis/pkg/perl/bin/perl
-#shop 245302 Purchase Request Form
+#shop 245302 Purchase/Repair/Customer Quote Form
 # By Dwayne Ayers
 use strict;
 use warnings;
