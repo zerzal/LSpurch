@@ -21,7 +21,7 @@ my $qdir = "/opt/app-root/src/quotes"; # Un-rem For production
 my $directory = "/opt/app-root/src/vendors"; # Un-rem For production
 my $cgiurl = "index.pl";  #Un-rem line for production
 
-my $nextven = "$directory\/$venreq\.txt";
+
 my $vensend = "venmail.pl";
 my $ymd = sub{sprintf '%02d-%02d-%04d',
     $_[4]+1, $_[3], $_[5]+1900, }->(localtime);
@@ -2038,7 +2038,7 @@ opendir (DIR, $qdir) or die $!;
 		
 		chomp($venreq);
 		
-		
+		my $nextven = "$directory/$venreq.txt";
 
 		open (NEW, "<", $nextven) || die "Cannot open vendor file: $!\n";
 			@newlist = ();
