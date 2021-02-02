@@ -111,10 +111,10 @@ if ($FORM{'hide'} == 3) {
 	&createreq;
 }
 
-if ($FORM{'hide'} == 4) {
-	$findq = $FORM{'findq'};
-	&createreq;
-}
+#if ($FORM{'hide'} == 4) {
+	#$findq = $FORM{'findq'};
+	#&createreq;
+#}
 
 
 #Vendor choose form
