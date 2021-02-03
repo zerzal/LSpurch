@@ -2040,7 +2040,7 @@ opendir (DIR, $qdir) or die $!;
 		
 		my $nextven = "$directory/$venreq.txt";
 		
-
+print $nextven;	
 
 		open (NEW, "<", $nextven) || die "Cannot open vendor file: $!\n";
 			@newlist = ();
@@ -2053,7 +2053,7 @@ opendir (DIR, $qdir) or die $!;
 			}	
 		close NEW;
 
-print "HELP!!!!!";		
+	
 		
 		chomp(@newlist);
 			
