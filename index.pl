@@ -2037,6 +2037,7 @@ opendir (DIR, $qdir) or die $!;
 		print  "<br>";
 		
 		chomp($venreq);
+		$venreq =~ s/\s+$//;
 		
 		my $nextven = "$directory/$venreq.txt";
 		
